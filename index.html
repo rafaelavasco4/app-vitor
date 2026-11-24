@@ -747,7 +747,7 @@ function renderTreino() {
       <div class="sets">${rows}</div>
       <label class="nl" for="nota-${i}">Como correu?</label>
       <textarea class="nota" id="nota-${i}" data-nota="${i}" rows="2" placeholder="Ex.: o peso estava pesado e só aguentei 8. Ou: dava para mais.">${esc(x.nota || '')}</textarea>
-      ${lastTxt ? `<div class="last">${lastTxt}</div>` : ''}</div>`;
+      </div>`;
   });
   h += `<div class="card send"><h3>Acabaste o treino?</h3><p class="small">Envia-o à Rafaela, com os pesos, as repetições e as notas.</p>
     <div class="row2"><a class="btn" id="waDay" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn ghost" type="button" data-copy="day">Copiar</button></div>
@@ -966,7 +966,7 @@ function renderHoje() {
   const b = Number(S.agua[TODAY]) || 0;
   $('#aguaTxt').textContent = b >= 2 ? 'Feito! 3 litros hoje.' : (b === 1 ? '1,5 L de 3 L. Falta 1 garrafa.' : 'Toca numa garrafa quando a acabares.');
   $('#bottles').innerHTML = [1, 2].map(n => `<button type="button" class="bottle ${b >= n ? 'full' : ''}" data-b="${n}" aria-pressed="${b >= n}">
-    <svg viewBox="0 0 28 56"><path d="M10 2h8v6l3 4v40a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V12l3-4z" fill="none" stroke="currentColor" stroke-width="2"/><path class="w" d="M8.5 20h11v32a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1z"/></svg>
+    <svg viewBox="0 0 28 56"><path d="M10 2h8v6l3 4v40a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V12l3-4z" fill="none" stroke="currentColor" stroke-width="2"/><path class="w" d="M11 4h6v5l3 4v38.5a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V13l3-4z"/></svg>
     <span><b>Garrafa ${n}</b><span class="muted small">1,5 L + 1 saqueta</span></span></button>`).join('');
   const hr = now.getHours() + now.getMinutes() / 60;
   let m = MEALS.find(x => x.h + 1 > hr), tomorrow = false;
