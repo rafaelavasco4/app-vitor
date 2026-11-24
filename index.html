@@ -261,11 +261,14 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 .it2{border-top:1px solid var(--line)}
 .store .it2:first-of-type{border-top:0}
 .it2 .row{border-top:0}
-.haveb{display:block;margin:-6px 0 8px 54px;padding:4px 0;min-height:32px;border:0;background:none;font-size:13.5px;font-weight:600;color:var(--mute);text-decoration:underline;cursor:pointer}
+.home{display:flex;align-items:center;gap:8px;margin:-4px 0 10px 54px;font-size:14px;color:var(--mute);font-weight:600}
+.home .stp{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:var(--soft);font:700 20px/1 sans-serif;color:var(--ink);cursor:pointer;padding:0}
+.home .hn{min-width:22px;text-align:center;font:700 20px/1 'Barlow Condensed',sans-serif;color:var(--ink)}
+.home .hl{margin-right:2px}
 .it2.have .row{opacity:.5}
 .it2.have .cb{visibility:hidden}
 .it2.have .p{text-decoration:line-through}
-.it2.have .n::after{content:'Já tens em casa';margin-left:6px;font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--soft);border:1px solid var(--line);color:var(--mute)}
+.it2.have .q{background:var(--soft);color:var(--mute)}
 .wkbar{background:var(--band);color:#fff;border-radius:14px;padding:12px 14px}
 .wkbar b{display:block;font:700 24px/1.1 'Barlow Condensed',sans-serif}
 .wkbar span{font-size:13.5px;color:#C9D3CD}
@@ -420,23 +423,23 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 <section class="view" id="v-compras">
   <h2>Compras da semana</h2>
   <div class="wkbar"><b id="cWeek"></b><span>Todas as segundas aparece uma lista nova.</span></div>
-  <p class="lead" style="margin-top:10px">Marca cada coisa quando a pões no carrinho. Se já tens em casa, carrega em “Já tenho em casa” e não precisas de comprar.</p>
+  <p class="lead" style="margin-top:10px">Antes de ires às compras, diz quantas coisas já tens em casa (no + e −). A lista e o preço mudam sozinhos. Depois marca cada coisa quando a pões no carrinho.</p>
   <div class="prog" id="cProg"></div>
 
   <div class="store" style="--sc:#2F8A4A;--qb:light-dark(#E3F2E7,#1D3626)">
     <div class="sh"><span>Pingo Doce</span><span id="tot-pd"></span></div>
-    <div class="it2" data-s="pd" data-id="pd-ovos" data-p="8.28"><label class="row"><input type="checkbox" data-c="pd-ovos"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Ovos<span class="q">30</span></span><span class="d" style="display:block">Ovos de Solo Classe M 24 un (6,49 €, preço a confirmar) + Ovos de Solo Classe M Pingo Doce 6 un (1,79 €)</span></span><span class="p">8,28 €</span></label><button type="button" class="haveb" data-h="pd-ovos">Já tenho em casa</button></div>
-    <div class="it2" data-s="pd" data-id="pd-pao" data-p="1.09"><label class="row"><input type="checkbox" data-c="pd-pao"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Pão de forma<span class="q">1 pacote</span></span><span class="d" style="display:block">Pão de Forma Branco com Côdea Pingo Doce 600 g</span></span><span class="p">1,09 €</span></label><button type="button" class="haveb" data-h="pd-pao">Já tenho em casa</button></div>
-    <div class="it2" data-s="pd" data-id="pd-wraps" data-p="1.09"><label class="row"><input type="checkbox" data-c="pd-wraps"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Wraps<span class="q">1 pacote de 8</span></span><span class="d" style="display:block">Tortilhas Wrap Pingo Doce</span></span><span class="p">1,09 €</span></label><button type="button" class="haveb" data-h="pd-wraps">Já tenho em casa</button></div>
-    <div class="it2" data-s="pd" data-id="pd-atum" data-p="6.58"><label class="row"><input type="checkbox" data-c="pd-atum"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Atum<span class="q">7 latas</span></span><span class="d" style="display:block">Atum Posta ao Natural Pingo Doce, 0,94 € cada</span></span><span class="p">6,58 €</span></label><button type="button" class="haveb" data-h="pd-atum">Já tenho em casa</button></div>
-    <div class="it2" data-s="pd" data-id="pd-macas" data-p="7.76"><label class="row"><input type="checkbox" data-c="pd-macas"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Maçãs<span class="q">28</span></span><span class="d" style="display:block">Maçã Gala Embalada 1,5 kg: 3 sacos + 1 solta</span></span><span class="p">7,76 €</span></label><button type="button" class="haveb" data-h="pd-macas">Já tenho em casa</button></div>
-    <div class="it2" data-s="pd" data-id="pd-leite" data-p="2.55"><label class="row"><input type="checkbox" data-c="pd-leite"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Leite<span class="q">3 litros</span></span><span class="d" style="display:block">Leite UHT Meio Gordo Pingo Doce, 0,85 € cada</span></span><span class="p">2,55 €</span></label><button type="button" class="haveb" data-h="pd-leite">Já tenho em casa</button></div>
+    <div class="it2" data-s="pd" data-id="pd-ovos" data-p="8.28"><label class="row"><input type="checkbox" data-c="pd-ovos"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Ovos<span class="q">30</span></span><span class="d" style="display:block">Ovos de Solo Classe M 24 un (6,49 €, preço a confirmar) + Ovos de Solo Classe M Pingo Doce 6 un (1,79 €)</span></span><span class="p">8,28 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
+    <div class="it2" data-s="pd" data-id="pd-pao" data-p="1.09"><label class="row"><input type="checkbox" data-c="pd-pao"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Pão de forma<span class="q">1 pacote</span></span><span class="d" style="display:block">Pão de Forma Branco com Côdea Pingo Doce 600 g</span></span><span class="p">1,09 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
+    <div class="it2" data-s="pd" data-id="pd-wraps" data-p="1.09"><label class="row"><input type="checkbox" data-c="pd-wraps"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Wraps<span class="q">1 pacote de 8</span></span><span class="d" style="display:block">Tortilhas Wrap Pingo Doce</span></span><span class="p">1,09 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
+    <div class="it2" data-s="pd" data-id="pd-atum" data-p="6.58"><label class="row"><input type="checkbox" data-c="pd-atum"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Atum<span class="q">7 latas</span></span><span class="d" style="display:block">Atum Posta ao Natural Pingo Doce, 0,94 € cada</span></span><span class="p">6,58 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
+    <div class="it2" data-s="pd" data-id="pd-macas" data-p="7.76"><label class="row"><input type="checkbox" data-c="pd-macas"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Maçãs<span class="q">28</span></span><span class="d" style="display:block">Maçã Gala Embalada 1,5 kg: 3 sacos + 1 solta</span></span><span class="p">7,76 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
+    <div class="it2" data-s="pd" data-id="pd-leite" data-p="2.55"><label class="row"><input type="checkbox" data-c="pd-leite"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Leite<span class="q">3 litros</span></span><span class="d" style="display:block">Leite UHT Meio Gordo Pingo Doce, 0,85 € cada</span></span><span class="p">2,55 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
   </div>
 
   <div class="store" style="--sc:#C8372D;--qb:light-dark(#FCE7E5,#3A1F1C)">
     <div class="sh"><span>Continente</span><span id="tot-ct"></span></div>
-    <div class="it2" data-s="ct" data-id="ct-iog" data-p="7.63"><label class="row"><input type="checkbox" data-c="ct-iog"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Iogurtes proteicos<span class="q">7</span></span><span class="d" style="display:block">+Proteína Stracciatella Continente, 1,09 € cada</span></span><span class="p">7,63 €</span></label><button type="button" class="haveb" data-h="ct-iog">Já tenho em casa</button></div>
-    <div class="it2" data-s="ct" data-id="ct-saq" data-p="5.98"><label class="row"><input type="checkbox" data-c="ct-saq"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Saquetas para a água<span class="q">2 caixas</span></span><span class="d" style="display:block">Prozis H2O Infusion (vê em baixo)</span></span><span class="p">5,98 €</span></label><button type="button" class="haveb" data-h="ct-saq">Já tenho em casa</button></div>
+    <div class="it2" data-s="ct" data-id="ct-iog" data-p="7.63"><label class="row"><input type="checkbox" data-c="ct-iog"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Iogurtes proteicos<span class="q">7</span></span><span class="d" style="display:block">+Proteína Stracciatella Continente, 1,09 € cada</span></span><span class="p">7,63 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
+    <div class="it2" data-s="ct" data-id="ct-saq" data-p="5.98"><label class="row"><input type="checkbox" data-c="ct-saq"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Saquetas para a água<span class="q">2 caixas</span></span><span class="d" style="display:block">Prozis H2O Infusion (vê em baixo)</span></span><span class="p">5,98 €</span></label><div class="home"><span class="hl">Em casa</span><button type="button" class="stp" data-m="-1" aria-label="Menos 1 em casa">−</button><b class="hn">0</b><button type="button" class="stp" data-m="1" aria-label="Mais 1 em casa">+</button><span class="hu"></span></div></div>
   </div>
 
   <div class="card">
@@ -579,7 +582,7 @@ function load() {
   return d;
 }
 const S = load();
-let PIN = lsGet(LP) || '';
+let PIN = '000';
 let Q = (() => { try { const q = JSON.parse(lsGet(LQ) || '[]'); return Array.isArray(q) ? q : []; } catch (e) { return []; } })();
 function saveLocal() { lsSet(LS, JSON.stringify(S)); if (typeof updateSend === 'function') updateSend(); }
 async function rpc(fn, args) {
@@ -984,24 +987,48 @@ function weekStart() { const d = parseIso(TODAY); d.setDate(d.getDate() - (d.get
 const WK = weekStart();
 const ITEMS = [...document.querySelectorAll('.it2')];
 const euro = v => v.toFixed(2).replace('.', ',') + ' €';
-function cState(id) { return S.compras[WK + '|' + id] || null; }
+const pl = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+/* quanto falta comprar: devolve [texto curto, descrição, preço] */
+const NEED = {
+  'pd-ovos': { n: 30, u: ['ovo', 'ovos'], f: k => { let best = null; for (let g = 0; g <= Math.ceil(k / 24); g++) { const s = Math.max(0, Math.ceil((k - 24 * g) / 6)), p = g * 6.49 + s * 1.79; if (!best || p < best.p - 1e-9) best = { g, s, p }; }
+      const parts = []; if (best.g) parts.push(pl(best.g, 'caixa de 24 (6,49 €)', 'caixas de 24 (6,49 € cada)')); if (best.s) parts.push(pl(best.s, 'caixa de 6 (1,79 €)', 'caixas de 6 (1,79 € cada)'));
+      return [pl(k, 'ovo', 'ovos'), 'Ovos de Solo Classe M: ' + parts.join(' + '), best.p]; } },
+  'pd-pao': { n: 1, u: ['pacote', 'pacotes'], f: k => [pl(k, 'pacote', 'pacotes'), 'Pão de Forma Branco com Côdea Pingo Doce 600 g', k * 1.09] },
+  'pd-wraps': { n: 8, u: ['wrap', 'wraps'], f: k => { const p = Math.ceil(k / 8); return [pl(p, 'pacote de 8', 'pacotes de 8'), 'Tortilhas Wrap Pingo Doce, 1,09 € o pacote', p * 1.09]; } },
+  'pd-atum': { n: 7, u: ['lata', 'latas'], f: k => [pl(k, 'lata', 'latas'), 'Atum Posta ao Natural Pingo Doce, 0,94 € cada', k * 0.94] },
+  'pd-macas': { n: 28, u: ['maçã', 'maçãs'], f: k => { const s = Math.floor(k / 9), l = k % 9, parts = [];
+      if (s) parts.push(pl(s, 'saco de 1,5 kg', 'sacos de 1,5 kg')); if (l) parts.push(pl(l, 'solta', 'soltas'));
+      return [pl(k, 'maçã', 'maçãs'), 'Maçã Gala (cada saco de 1,5 kg tem cerca de 9): ' + parts.join(' + '), s * 2.49 + l * 0.29]; } },
+  'pd-leite': { n: 3, u: ['litro', 'litros'], f: k => [pl(k, 'litro', 'litros'), 'Leite UHT Meio Gordo Pingo Doce, 0,85 € cada', k * 0.85] },
+  'ct-iog': { n: 7, u: ['iogurte', 'iogurtes'], f: k => [String(k), '+Proteína Stracciatella Continente, 1,09 € cada', k * 1.09] },
+  'ct-saq': { n: 2, u: ['caixa', 'caixas'], f: k => [pl(k, 'caixa', 'caixas'), 'Prozis H2O Infusion, 2,99 € cada (vê em baixo)', k * 2.99] }
+};
+const kB = id => WK + '|' + id, kH = id => WK + '|h|' + id;
+const bought = id => S.compras[kB(id)] === 'c';
+const atHome = id => Math.max(0, Math.min(NEED[id].n, +S.compras[kH(id)] || 0));
 function renderCompras() {
   const e = parseIso(WK); e.setDate(e.getDate() + 6);
   $('#cWeek').textContent = 'Semana de ' + ddmm(WK) + ' a ' + ddmm(iso(e));
   let done = 0, need = 0; const tot = { pd: 0, ct: 0 };
   ITEMS.forEach(it => {
-    const id = it.dataset.id, st = cState(id), cb = it.querySelector('input'), hb = it.querySelector('.haveb');
-    it.classList.toggle('have', st === 'h'); cb.checked = st === 'c'; cb.disabled = st === 'h';
-    hb.textContent = st === 'h' ? 'Afinal preciso de comprar' : 'Já tenho em casa';
-    if (st !== 'h') { need++; tot[it.dataset.s] += +it.dataset.p; if (st === 'c') done++; }
+    const id = it.dataset.id, cfg = NEED[id], h = atHome(id), k = cfg.n - h, cb = it.querySelector('input');
+    it.querySelector('.hn').textContent = h; it.querySelector('.hu').textContent = h === 1 ? cfg.u[0] : cfg.u[1];
+    it.querySelector('[data-m="-1"]').disabled = h <= 0; it.querySelector('[data-m="1"]').disabled = h >= cfg.n;
+    const none = k <= 0; it.classList.toggle('have', none);
+    if (none) { it.querySelector('.q').textContent = 'tens tudo'; it.querySelector('.d').textContent = 'Já tens em casa o que precisas esta semana.'; it.querySelector('.p').textContent = '0,00 €'; cb.checked = false; cb.disabled = true; return; }
+    const [q, d, p] = cfg.f(k); cb.disabled = false; cb.checked = bought(id);
+    it.querySelector('.q').textContent = q; it.querySelector('.d').textContent = d; it.querySelector('.p').textContent = euro(p);
+    need++; tot[it.dataset.s] += p; if (cb.checked) done++;
   });
   $('#tot-pd').textContent = euro(tot.pd); $('#tot-ct').textContent = euro(tot.ct); $('#cTot').textContent = euro(tot.pd + tot.ct);
   $('#cProg').textContent = need === 0 ? 'Tens tudo em casa esta semana!' : done === need ? 'Tudo no carrinho!' : done + ' de ' + need + ' no carrinho';
 }
 ITEMS.forEach(it => {
-  const id = it.dataset.id, k = WK + '|' + id;
-  it.querySelector('input').addEventListener('change', ev => { put('compras', k, ev.target.checked ? 'c' : null); renderCompras(); });
-  it.querySelector('.haveb').addEventListener('click', () => { put('compras', k, cState(id) === 'h' ? null : 'h'); renderCompras(); });
+  const id = it.dataset.id;
+  it.querySelector('input').addEventListener('change', ev => { put('compras', kB(id), ev.target.checked ? 'c' : null); renderCompras(); });
+  it.querySelectorAll('.stp').forEach(bt => bt.addEventListener('click', () => {
+    const v = Math.max(0, Math.min(NEED[id].n, atHome(id) + +bt.dataset.m)); put('compras', kH(id), v || null); renderCompras();
+  }));
 });
 
 /* ---------- enviar à Rafaela ---------- */
@@ -1031,7 +1058,7 @@ document.addEventListener('click', async ev => {
 
 /* ---------- arranque ---------- */
 function showGate(msg) {
-  PIN = ''; lsSet(LP, '');
+  setSync('off'); return;
   $('#gate').hidden = false; $('#gateErr').textContent = msg || '';
   setTimeout(() => { try { $('#gateIn').focus(); } catch (e) {} }, 50);
 }
@@ -1050,8 +1077,7 @@ $('#gateForm').addEventListener('submit', async ev => {
 });
 renderHeader(); renderHoje(); renderTreino(); renderCompras(); renderPeso(); route(); updateSend();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
-if (!PIN) showGate();
-else {
+{
   pull(true).then(() => flush());
   if (pushOK() && Notification.permission === 'granted') subscribePush(false).catch(() => {});
 }
