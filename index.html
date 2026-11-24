@@ -333,7 +333,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="meal" data-h="12" style="--mc:var(--ink)"><div class="h">12h</div><div class="card">
     <h3>Almoço</h3>
     <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>300 g</b></div>
-    <div class="it"><span>Frango, peru ou peixe <small class="muted" style="display:block;font-size:13px">pelo menos 1 bife</small></span><b>à vontade</b></div>
+    <div class="it"><span>Frango, peru ou peixe</span><b></b></div>
     <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
     <div class="it"><span>Azeite</span><b>1 colher</b></div>
     <div class="it"><span>Fruta</span><b>1 peça</b></div>
@@ -350,7 +350,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="meal" data-h="21" style="--mc:#3B6FD8"><div class="h">21h</div><div class="card">
     <h3>Jantar</h3>
     <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>450 g</b></div>
-    <div class="it"><span>Frango, peru ou peixe <small class="muted" style="display:block;font-size:13px">pelo menos 1 bife</small></span><b>à vontade</b></div>
+    <div class="it"><span>Frango, peru ou peixe</span><b></b></div>
     <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
     <div class="it"><span>Azeite</span><b>1 colher</b></div>
     <div class="it"><span>Fruta</span><b>1 peça</b></div>
@@ -899,9 +899,9 @@ const ro = new ResizeObserver(drawChart); ro.observe(chart);
 const MEALS = [
   { h: 6, n: 'Pequeno-almoço', it: '3 ovos mexidos ou omelete · 2 fatias de pão · batido (300 ml de leite + 1 dose de whey)' },
   { h: 10, n: 'Lanche da manhã', it: '1 peça de fruta' },
-  { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · frango, peru ou peixe à vontade (pelo menos 1 bife) · salada · 1 colher de azeite · 1 fruta' },
+  { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' },
   { h: 17, n: 'Lanche da tarde', it: 'Wrap de atum + ovo mexido, iogurte proteico e fruta. Com muita fome: 2 wraps' },
-  { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · frango, peru ou peixe à vontade (pelo menos 1 bife) · salada · 1 colher de azeite · 1 fruta' }
+  { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' }
 ];
 const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
