@@ -736,7 +736,7 @@ function renderTreino() {
         <div class="inp"><input inputmode="numeric" autocomplete="off" aria-label="${esc(e[0])}, série ${j + 1}, repetições" data-i="${i}" data-j="${j}" data-f="1" value="${esc(v[1])}" placeholder="${r.lo}–${r.hi}"><span>reps</span></div></div>`;
     }
     let lastTxt = '';
-    if (last) { lastTxt = 'Última vez (' + ddmm(last.d) + '): ' + esc(fmtSets(last.x)); if (String(last.x.nota || '').trim()) lastTxt += ' · Nota: ' + esc(String(last.x.nota).trim()); }
+    if (last) { lastTxt = 'Última vez (' + ddmm(last.d) + '): ' + esc(fmtSets(last.x)); }
     h += `<div class="card ex" style="--dc:${d.c}"><div class="hd"><span class="num">${i + 1}</span><div>
       <div class="name">${esc(e[0])}</div><div class="br">${esc(e[1])}</div>
       <a class="vid" href="${yt(e[2])}" target="_blank" rel="noopener">▶ Ver vídeo de como se faz</a></div></div>
