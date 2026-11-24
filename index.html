@@ -886,15 +886,15 @@ function renderAvisos() {
   const box = $('#avisos'); if (!box) return;
   let h = '';
   if (isIOS() && !isStandalone()) {
-    h = '<b>Instala a app no telemóvel</b><p class="small" style="margin:4px 0 0">No Safari, toca no botão <b>Partilhar</b> (o quadrado com a seta para cima) e depois em <b>Adicionar ao ecrã principal</b>. A seguir abre a app pelo ícone. Só assim recebes o aviso de sábado.</p>';
+    h = '<b>Instala a app no telemóvel</b><p class="small" style="margin:4px 0 0">No Safari, toca no botão <b>Partilhar</b> (o quadrado com a seta para cima) e depois em <b>Adicionar ao ecrã principal</b>. A seguir abre a app pelo ícone. Só assim recebes os avisos.</p>';
   } else if (!pushOK()) {
     h = '';
   } else if (Notification.permission === 'granted' && lsGet('vitor-avisos') === '1') {
     h = '';
   } else if (Notification.permission === 'denied') {
-    h = '<b>Avisos desligados</b><p class="small" style="margin:4px 0 0">Para receberes o aviso de sábado, liga as notificações da app nas Definições do telemóvel.</p>';
+    h = '<b>Avisos desligados</b><p class="small" style="margin:4px 0 0">Para receberes os avisos, liga as notificações da app nas Definições do telemóvel.</p>';
   } else {
-    h = '<b>Aviso de sábado</b><p class="small" style="margin:4px 0 0">Todos os sábados de manhã recebes um aviso para te pesares.</p><button type="button" class="btn full" id="ativarAvisos">Ativar avisos</button><p class="err" id="avisoErr"></p>';
+    h = '<b>Aviso todas as manhãs</b><p class="small" style="margin:4px 0 0">Todos os dias às 5h recebes um aviso com o plano do dia. Ao sábado, lembra-te de te pesares.</p><button type="button" class="btn full" id="ativarAvisos">Ativar avisos</button><p class="err" id="avisoErr"></p>';
   }
   box.innerHTML = h ? '<div class="card notif">' + h + '</div>' : '';
 }
