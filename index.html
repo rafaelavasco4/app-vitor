@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1F2A24">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vitor">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<title>App do Vitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: treinador direto e animado, frases curtas, sempre por "tu".
+   IDEA: a ficha de treino em papel que o PT entrega, passada para o telemóvel.
+   PICTURE: o próprio plano do dia: horas grandes penduradas e cartões de exercício com caixas para kg e reps.
+   COLOUR and TYPE: faixa verde-escura #1F2A24 e fundo claro; cada dia de treino com a sua cor (laranja, azul, verde, roxo). Barlow Condensed nos números e títulos, Barlow no texto.
+   LAYOUT: cabeçalho fixo, uma coluna até 560px, barra de separadores em baixo. */
+:root{color-scheme:light dark;
+--bg:light-dark(#F3F2EE,#101412);--card:light-dark(#FFFFFF,#1A201D);--ink:light-dark(#17201B,#E9EDE9);
+--mute:light-dark(#5F6661,#9BA49E);--line:light-dark(#E2E0D9,#2A322E);--soft:light-dark(#F6F5F1,#141916);
+--band:light-dark(#1F2A24,#0B0F0D);--acc:#3E9A55;--okbg:light-dark(#E4F3E8,#1D3626);--okink:light-dark(#1E6A36,#9FD8AE);
+--warnbg:light-dark(#FFF3D1,#3A3115);--warnink:light-dark(#6B4E00,#F3D58A)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:110px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,system-ui,sans-serif;overflow-x:clip}
+button,input{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid #7FB58E;outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;background:var(--band);color:#fff;padding:calc(env(safe-area-inset-top) + 12px) max(18px,env(safe-area-inset-right)) 14px max(18px,env(safe-area-inset-left))}
+.top .in{max-width:560px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.top h1{font:700 32px/1.05 'Barlow Condensed',sans-serif;margin:0}
+.top .sub{color:#BFCBC3;font-size:15px}
+.chip{flex:none;display:inline-block;font-size:13px;font-weight:600;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.13);white-space:nowrap}
+main{max-width:560px;margin:0 auto;padding:16px max(14px,env(safe-area-inset-left)) calc(150px + env(safe-area-inset-bottom))}
+.view{display:none}.view.on{display:block}
+h2{font:700 28px/1.1 'Barlow Condensed',sans-serif;margin:26px 0 10px;text-wrap:balance}
+.view>h2:first-child{margin-top:4px}
+h3{font:700 21px/1.15 'Barlow Condensed',sans-serif;margin:0}
+p{margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.muted{color:var(--mute)}.small{font-size:14px}
+.lead{color:var(--mute);margin:-4px 0 12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:12px;border:0;background:light-dark(#1F2A24,#E9EDE9);color:light-dark(#fff,#101412);text-align:center;font-weight:700;text-decoration:none;cursor:pointer}
+.btn.ghost{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.btn.full{width:100%}
+.btn.danger{background:#B3261E}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.tabs .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0 7px;font-size:12.5px;font-weight:600;color:var(--mute);text-decoration:none;min-height:58px}
+.tabs svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tabs a.on{color:var(--ink)}.tabs a.on svg{stroke:var(--acc);stroke-width:2.3}
+/* hoje */
+.today{border:0;color:#fff;background:var(--dc,#55605A);padding:18px}
+.today .k{font-size:14px;font-weight:600;opacity:.9}
+.today h3{font-size:30px;margin:2px 0 6px}
+.today .btn{background:#fff;color:#17201B;margin-top:10px}
+.meter{height:8px;border-radius:99px;background:rgba(255,255,255,.28);overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;background:#fff;border-radius:99px}
+.banner{background:var(--warnbg);color:var(--warnink);border-radius:14px;padding:12px 14px;margin-bottom:12px;font-weight:500}
+.banner b{display:block;font-size:17px}
+.bottles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.bottle{display:flex;align-items:center;gap:10px;min-height:76px;border-radius:14px;border:1px solid var(--line);background:var(--soft);padding:8px 12px;cursor:pointer;text-align:left}
+.bottle svg{width:28px;height:56px;flex:none}
+.bottle .w{fill:transparent;transition:fill .25s}
+.bottle.full .w{fill:#3B7DD8}
+.bottle.full{border-color:#3B7DD8}
+.bottle b{display:block;font-size:16px}
+.next .h{font:700 34px/1 'Barlow Condensed',sans-serif}
+/* comida */
+.meal{display:grid;grid-template-columns:54px minmax(0,1fr);gap:10px;margin-bottom:12px}
+.meal .h{font:700 32px/1 'Barlow Condensed',sans-serif;text-align:right;padding-top:14px;color:var(--mc)}
+.meal .card{margin:0}
+.meal.now .card{box-shadow:0 0 0 2px var(--mc)}
+.it{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line)}
+.it:first-of-type{border-top:0}
+.it b{white-space:nowrap;text-align:right;flex:none}
+.tag{font-size:13px;font-weight:600;color:var(--mute)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:8px}
+.opt{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.opt .t{font-weight:700;color:light-dark(#2F7A4C,#8FD0A2);font-size:14px;margin-bottom:2px}
+.opt div.l{padding:3px 0;font-size:15px}
+.note{font-size:14px;color:var(--mute);margin-top:8px}
+.avoid{background:light-dark(#FBEDEC,#33201E);border-radius:14px;padding:12px 14px;font-size:15px}
+.avoid b{color:light-dark(#A12A21,#F2A39C)}
+.box{background:var(--okbg);color:var(--okink);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.box b{display:block;font-size:17px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{background:#3E9A55;color:#fff;padding:8px 6px;font-weight:700;text-align:center}
+th:first-child{background:none}
+th small{display:block;font-weight:500;opacity:.85}
+td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:right;font:700 20px 'Barlow Condensed',sans-serif;white-space:nowrap}
+td:first-child{text-align:left;font:600 15px/1.3 Barlow,sans-serif;white-space:normal}
+td small{display:block;font-weight:400;color:var(--mute);font-size:13px}
+tr:first-child th:nth-child(2){border-radius:10px 0 0 0}tr:first-child th:last-child{border-radius:0 10px 0 0}
+.rule{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.rule:first-child{border-top:0}
+.rule b{color:light-dark(#2F7A4C,#8FD0A2)}
+details.card summary{cursor:pointer;font:700 21px 'Barlow Condensed',sans-serif;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:30px}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:'+';font-size:26px;color:var(--mute)}
+details[open].card summary::after{content:'–'}
+ul{padding-left:20px;margin:6px 0 10px}li{margin-bottom:4px}
+.dz{border-radius:12px;padding:10px 12px;margin:8px 0}
+.dz.no{background:light-dark(#FBEDEC,#33201E)}.dz.yes{background:var(--okbg)}
+/* treino */
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:12px}
+.week button{min-height:60px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-weight:700;font-size:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;padding:0}
+.week button i{width:9px;height:9px;border-radius:50%;background:var(--dc,transparent);border:1px solid var(--dc,var(--line))}
+.week button small{font-size:11px;font-weight:600;color:var(--mute);line-height:1}
+.week button.sel{background:var(--dc,#55605A);border-color:transparent;color:#fff}
+.week button.sel i{background:#fff;border-color:#fff}.week button.sel small{color:#fff}
+.dayhead{background:var(--dc);color:#fff;border-radius:16px;padding:16px;margin-bottom:12px}
+.dayhead h3{font-size:30px}
+.dayhead p{margin:4px 0 0;opacity:.95}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;background:rgba(0,0,0,.16);border-radius:12px;padding:8px 12px;cursor:pointer}
+.sw input{appearance:none;width:50px;height:30px;border-radius:99px;background:rgba(255,255,255,.35);position:relative;flex:none;cursor:pointer;margin:0;transition:background .2s}
+.sw input::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw input:checked{background:#17201B}.sw input:checked::after{transform:translateX(20px)}
+.ex{position:relative}
+.ex .hd{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start}
+.num{width:34px;height:34px;border-radius:50%;background:var(--dc);color:#fff;font:700 19px 'Barlow Condensed',sans-serif;display:grid;place-items:center}
+.ex .name{font-weight:700;font-size:17.5px;line-height:1.25}
+.ex .br{font-size:14px;color:var(--mute)}
+.ex .vid{font-size:14px;font-weight:600;display:inline-block;margin-top:2px;color:var(--mute)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.pill{font:700 17px 'Barlow Condensed',sans-serif;padding:6px 11px;border-radius:10px;background:var(--soft);border:1px solid var(--line);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+button.pill{cursor:pointer;min-height:40px}
+button.pill svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.tip{font-size:14.5px;color:var(--mute)}
+.up{display:inline-block;background:var(--okbg);color:var(--okink);font-weight:700;font-size:14px;padding:4px 10px;border-radius:9px;margin-top:8px}
+.sets{margin-top:10px;display:grid;gap:7px}
+.set{display:grid;grid-template-columns:58px minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center}
+.set>span{font-size:14px;color:var(--mute);font-weight:600}
+.inp{position:relative}
+.inp input{width:100%;height:46px;border-radius:11px;border:1px solid var(--line);background:var(--soft);font-weight:700;font-size:18px;padding:0 40px 0 12px}
+.inp input::placeholder{color:var(--mute);opacity:.55;font-weight:500}
+.inp span{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--mute);pointer-events:none}
+.set.done .inp input{border-color:var(--dc);background:var(--card)}
+.last{font-size:13.5px;color:var(--mute);margin-top:8px}
+.hist .r{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.hist .r:first-child{border-top:0}
+.hist i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;background:var(--dc)}
+.timer{position:fixed;left:50%;transform:translateX(-50%);width:min(536px,calc(100% - 24px));bottom:calc(68px + env(safe-area-inset-bottom));z-index:7;background:var(--band);color:#fff;border-radius:16px;padding:8px 10px 8px 16px;display:none;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.28)}
+.timer.on{display:flex}
+.timer .t{font:700 36px/1 'Barlow Condensed',sans-serif;min-width:78px}
+.timer .l{flex:1;font-size:14px;line-height:1.25;color:#CBD5CF}
+.timer button{min-height:44px;min-width:52px;border-radius:11px;border:0;background:rgba(255,255,255,.14);color:#fff;font-weight:700;cursor:pointer}
+.timer.end{background:#3E9A55}.timer.end .l{color:#fff}
+/* compras */
+.store{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card);margin-bottom:12px}
+.store .sh{display:flex;justify-content:space-between;color:#fff;font:700 22px 'Barlow Condensed',sans-serif;padding:10px 14px;background:var(--sc)}
+.row{position:relative;display:flex;gap:12px;align-items:center;padding:11px 14px;border-top:1px solid var(--line);min-height:60px;cursor:pointer}
+.row:first-of-type{border-top:0}
+.row input{position:absolute;opacity:0;pointer-events:none}
+.cb{width:28px;height:28px;border-radius:8px;border:2px solid var(--sc);flex:none;display:grid;place-items:center}
+.cb svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.row input:checked+.cb{background:var(--sc)}.row input:checked+.cb svg{opacity:1}
+.row input:focus-visible+.cb{outline:3px solid #7FB58E;outline-offset:2px}
+.row .x{flex:1}
+.row .n{font-weight:700;font-size:17px}
+.row .q{font-size:13px;font-weight:700;padding:1px 9px;border-radius:99px;background:var(--qb);color:var(--sc);white-space:nowrap;margin-left:4px}
+.row .d{font-size:13.5px;color:var(--mute);line-height:1.35}
+.row .p{font-weight:700;white-space:nowrap;flex:none}
+.row input:checked~.x .n{text-decoration:line-through;color:var(--mute)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0}
+.tot.big{font:700 26px 'Barlow Condensed',sans-serif}
+.prog{font-weight:600;color:var(--mute);margin-bottom:10px}
+.infusion{background:var(--warnbg);color:var(--warnink);border-radius:14px;padding:14px;text-align:center;margin-bottom:12px}
+.infusion .w{font:700 44px/1 'Barlow Condensed',sans-serif;letter-spacing:.02em;margin:6px 0;color:var(--ink)}
+.flav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.flav span{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:99px;background:var(--soft);border:1px solid var(--line);font-weight:600;font-size:15px}
+.flav i{width:12px;height:12px;border-radius:50%}
+.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+.steps li{counter-increment:s;display:flex;gap:10px;align-items:center;padding:6px 0;margin:0}
+.steps li::before{content:counter(s);width:28px;height:28px;border-radius:50%;background:#3B7DD8;color:#fff;font:700 16px 'Barlow Condensed',sans-serif;display:grid;place-items:center;flex:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.two div{background:#3B7DD8;color:#fff;border-radius:12px;padding:10px;text-align:center;font-size:14px}
+.two b{display:block;font:700 30px/1.05 'Barlow Condensed',sans-serif}
+/* peso */
+.hero{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 12px;align-items:flex-end}
+.hero .v{font:700 clamp(54px,16vw,72px)/0.95 'Barlow Condensed',sans-serif;white-space:nowrap}
+.hero .v small{font-size:.45em}
+.delta{display:inline-block;font-weight:700;padding:4px 10px;border-radius:9px;background:var(--okbg);color:var(--okink)}
+.delta.neg{background:light-dark(#FBEDEC,#33201E);color:light-dark(#A12A21,#F2A39C)}
+.goal{margin-top:14px}
+.goal .bar{position:relative;height:14px;border-radius:99px;background:var(--soft);border:1px solid var(--line);overflow:hidden}
+.goal .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--acc);border-radius:99px}
+.goal .lab{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-top:4px}
+.fig{position:relative;height:230px;margin-top:6px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.form{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:8px;align-items:end}
+.form label{font-size:13px;font-weight:600;color:var(--mute);display:block;margin-bottom:3px}
+.form input{width:100%;height:46px;border-radius:11px;border:1px solid var(--line);background:var(--soft);font-size:17px;font-weight:600;padding:0 10px}
+.list .r{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.list .r:first-child{border-top:0}
+.list .kg{font:700 22px 'Barlow Condensed',sans-serif;white-space:nowrap}
+.list .r>span:nth-child(2){white-space:nowrap}
+.list .df{font-size:13px;font-weight:700;color:var(--okink);white-space:nowrap}
+.list .df.neg{color:light-dark(#A12A21,#F2A39C)}
+.del{min-width:44px;min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--soft);cursor:pointer;font-weight:700;color:var(--mute)}
+.del.sure{background:#B3261E;color:#fff;border-color:#B3261E;min-width:84px}
+.plan .r{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:10px;padding:9px 0;border-top:1px solid var(--line);align-items:center}
+.plan .r:first-child{border-top:0}
+.ok{color:var(--okink);font-weight:700;white-space:nowrap}
+.status{font-size:14px;color:var(--mute);display:flex;gap:8px;align-items:center}
+.status i{width:9px;height:9px;border-radius:50%;background:#B9B4A8;flex:none}
+.status.cloud i{background:#3E9A55}
+textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--line);background:var(--soft);color:var(--ink);font:14px/1.4 Barlow,sans-serif;padding:10px;margin-top:8px}
+.row2{display:flex;gap:8px;flex-wrap:wrap}
+.row2 .btn{flex:1}
+
+.kgbox{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:10px}
+.kgbox .l{font-size:14px;color:var(--mute);font-weight:600;line-height:1.25}
+.kgbox b{font:700 34px/1 'Barlow Condensed',sans-serif;white-space:nowrap;flex:none}
+.kgin{width:128px;flex:none}.kgin input{font:700 24px 'Barlow Condensed',sans-serif;padding-right:36px}
+.kgbox .ref{display:block;font-weight:500;font-size:13.5px;margin-top:2px}
+.alt{margin-top:6px;background:none;border:0;padding:6px 0;font-size:14px;font-weight:600;color:var(--mute);text-decoration:underline;cursor:pointer;text-align:left;min-height:36px}
+.warm{font-size:14.5px;background:var(--warnbg);color:var(--warnink);border-radius:10px;padding:8px 12px;margin-top:8px}
+.set{grid-template-columns:58px minmax(0,1fr) minmax(0,1fr)}
+.set .x{font:700 19px 'Barlow Condensed',sans-serif;white-space:nowrap;color:var(--mute)}
+.nl{display:block;font-size:14px;font-weight:600;color:var(--mute);margin:12px 0 4px}
+.nota{width:100%;min-height:64px;border-radius:11px;border:1px solid var(--line);background:var(--soft);color:var(--ink);font:16px/1.4 Barlow,sans-serif;padding:9px 12px;resize:vertical}
+.send{background:var(--band);color:#fff;border:0}
+.send p{color:#C9D3CD}
+.send .btn{background:#fff;color:#17201B}
+.send .btn.ghost{background:rgba(255,255,255,.14);color:#fff;border:0}
+.copyBox{margin-top:10px}
+.hist details{border-top:1px solid var(--line)}
+.hist details:first-child{border-top:0}
+.hist summary{display:flex;justify-content:space-between;gap:10px;padding:10px 0;cursor:pointer;list-style:none}
+.hist summary::-webkit-details-marker{display:none}
+.hist .det{font-size:14.5px;padding:0 0 10px 18px;white-space:pre-line;color:var(--mute)}
+.wform{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:10px}
+.wform .inp input{padding-right:40px}
+.err{color:light-dark(#B3261E,#F2A39C);font-size:14px;margin:8px 0 0;min-height:1em}
+.bigkg{font:700 52px/1 'Barlow Condensed',sans-serif;margin:6px 0}
+.note2{font-size:14px;color:var(--mute);margin-top:14px}
+
+.gate{position:fixed;inset:0;z-index:20;background:var(--band);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:max(24px,env(safe-area-inset-top)) 24px 24px}
+.gate[hidden]{display:none}
+.gate .in{max-width:420px;margin:0 auto;width:100%}
+.gate img{width:84px;height:84px;border-radius:20px;display:block;margin-bottom:18px}
+.gate h1{font:700 40px/1.05 'Barlow Condensed',sans-serif;margin:0 0 6px}
+.gate p{color:#C9D3CD;margin:0 0 18px}
+.gate input{width:100%;height:58px;border-radius:14px;border:0;background:rgba(255,255,255,.12);color:#fff;font:700 30px 'Barlow Condensed',sans-serif;letter-spacing:.2em;text-align:center}
+.gate .btn{width:100%;margin-top:12px;min-height:52px;background:#3E9A55;color:#fff;font-size:17px}
+.gate .err{color:#F2A39C;text-align:center}
+.sync{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#BFCBC3;margin-top:2px}
+.sync i{width:7px;height:7px;border-radius:50%;background:#7FB58E}
+.sync.off i{background:#E0A040}.sync.busy i{background:#BFCBC3}
+.notif{border:1px solid var(--line)}
+.notif .btn{margin-top:10px}
+@media (max-width:370px){.set{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr)}.rule{grid-template-columns:80px minmax(0,1fr)}.form{grid-template-columns:1fr 1fr}.form .btn{grid-column:1/-1}.plan .r{grid-template-columns:92px minmax(0,1fr) auto}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <div><h1 id="hello">Olá, Vitor</h1><div class="sub" id="dateLine"></div><div class="sync busy" id="sync"><i></i><span>A abrir…</span></div></div>
+  <span class="chip" id="testChip" hidden></span>
+</div></header>
+
+<main>
+<div class="gate" id="gate" hidden><div class="in">
+  <img src="icon-192.png" alt="">
+  <h1>App do Vitor</h1>
+  <p>Escreve o código da app. Só é preciso uma vez.</p>
+  <form id="gateForm"><input id="gateIn" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="······" aria-label="Código da app"><button class="btn" type="submit">Entrar</button></form>
+  <p class="err" id="gateErr"></p>
+</div></div>
+
+<!-- HOJE -->
+<section class="view" id="v-hoje">
+  <div id="hojeBanner"></div>
+  <div id="hojeTreino"></div>
+  <div class="card">
+    <h3>Água de hoje</h3>
+    <p class="muted small" id="aguaTxt">Toca numa garrafa quando a acabares.</p>
+    <div class="bottles" id="bottles"></div>
+  </div>
+  <div class="card next" id="hojeMeal"></div>
+  <div id="avisos"></div>
+</section>
+
+<!-- COMIDA -->
+<section class="view" id="v-comida">
+  <h2>Comida do Vitor</h2>
+  <p class="lead">5 refeições · 3 L de água · meta: +2 a 3 kg em 30 dias</p>
+
+  <div class="meal" data-h="6" style="--mc:#C8901A"><div class="h">6h</div><div class="card">
+    <h3>Pequeno-almoço</h3>
+    <div class="it"><span>Ovos mexidos ou omelete</span><b>3</b></div>
+    <div class="it"><span>Pão de forma</span><b>2 fatias</b></div>
+    <div class="it"><span>Batido: leite + whey</span><b>300 ml + 1 dose</b></div>
+  </div></div>
+
+  <div class="meal" data-h="10" style="--mc:#7B5CD6"><div class="h">10h</div><div class="card">
+    <h3>Lanche da manhã</h3>
+    <div class="it"><span>Fruta</span><b>1 peça</b></div>
+  </div></div>
+
+  <div class="meal" data-h="12" style="--mc:var(--ink)"><div class="h">12h</div><div class="card">
+    <h3>Almoço</h3>
+    <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>300 g</b></div>
+    <div class="it"><span>Frango, peru ou peixe</span><b>150 g</b></div>
+    <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
+    <div class="it"><span>Azeite</span><b>1 colher</b></div>
+    <div class="it"><span>Fruta</span><b>1 peça</b></div>
+  </div></div>
+
+  <div class="meal" data-h="17" style="--mc:#2F7A4C"><div class="h">17h</div><div class="card">
+    <h3>Lanche da tarde <span class="tag">· escolhe 1</span></h3>
+    <div class="opts">
+      <div class="opt"><div class="t">Opção 1 · Wrap</div><div class="l"><b>1</b> wrap: atum + ovo mexido</div><div class="l"><b>1</b> iogurte proteico</div><div class="l"><b>1</b> peça de fruta</div></div>
+      <div class="opt"><div class="t">Opção 2 · Caixa</div><div class="l"><b>150 g</b> arroz ou batata</div><div class="l"><b>1</b> lata de atum ou <b>2</b> ovos mexidos</div><div class="l"><b>1</b> iogurte proteico</div></div>
+    </div>
+    <p class="note">Com muita fome: 2 wraps na opção 1. A opção 2 leva-se numa caixa (tupperware).</p>
+  </div></div>
+
+  <div class="meal" data-h="21" style="--mc:#3B6FD8"><div class="h">21h</div><div class="card">
+    <h3>Jantar</h3>
+    <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>450 g</b></div>
+    <div class="it"><span>Frango, peru ou peixe</span><b>150 g</b></div>
+    <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
+    <div class="it"><span>Azeite</span><b>1 colher</b></div>
+    <div class="it"><span>Fruta</span><b>1 peça</b></div>
+  </div></div>
+
+  <div class="avoid"><b>Evitar:</b> bolachas, chocolate, batatas fritas, sumos, refrigerantes, comer do pacote, saltar refeições.</div>
+
+  <h2>Arroz, massa e batata</h2>
+  <div class="box"><b>Se és tu a cozinhar</b>Pesa o arroz ou a massa <b style="display:inline;font-size:inherit">crus</b>, antes de os cozinhar.</div>
+  <div class="card" style="padding:10px 12px">
+    <table>
+      <tr><th></th><th>Almoço<small>12h</small></th><th>Jantar<small>21h</small></th></tr>
+      <tr><td>Arroz ou massa crus<small>se és tu a cozinhar</small></td><td>100 g</td><td>150 g</td></tr>
+      <tr><td>Arroz ou massa cozidos<small>o que vai para o prato</small></td><td>300 g</td><td>450 g</td></tr>
+      <tr><td>Batata<small>crua ou cozida, é igual</small></td><td>300 g</td><td>450 g</td></tr>
+    </table>
+  </div>
+
+  <h2>Não esquecer</h2>
+  <div class="card">
+    <div class="rule"><b>Água</b><span>3 L por dia: 2 garrafas de 1,5 L com 1 saqueta cada.</span></div>
+    <div class="rule"><b>Legumes</b><span>Pede à mãe salada ou legumes ao almoço e ao jantar.</span></div>
+    <div class="rule"><b>À noite</b><span>Prepara o lanche do dia seguinte e deixa a garrafa de água pronta.</span></div>
+    <div class="rule"><b>Frango</b><span>Cru só aguenta 1 a 2 dias no frigorífico, por isso cozinha logo ou congela. Cozinhado aguenta 3 a 4 dias.</span></div>
+    <div class="rule"><b>Pesar-te</b><span>Todos os sábados de manhã, em jejum, depois de ires à casa de banho.</span></div>
+  </div>
+
+  <details class="card" style="margin-top:26px">
+    <summary>Doces</summary>
+    <div class="dz no"><b>Até 13 de dezembro</b><br>Nada de doces nem de snacks.</div>
+    <div class="dz yes"><b>A partir de 14 de dezembro</b><br>1 doce por semana, só se sentires mesmo necessidade. Se não sentires, perfeito.</div>
+    <p style="margin-top:12px"><b>Escolhe só 1 destes por semana</b></p>
+    <ul>
+      <li>1 bolo de pastelaria (pastel de nata, bola de Berlim, croissant)</li>
+      <li>1 gelado pequeno (1 cone ou 2 bolas)</li>
+      <li>3 ou 4 quadrados de chocolate</li>
+      <li>1 fatia de bolo caseiro</li>
+      <li>1 pacote pequeno de batatas fritas, individual</li>
+      <li>1 lata de refrigerante normal</li>
+    </ul>
+    <p><b>Regras</b></p>
+    <ul>
+      <li>É 1 por semana, não 1 de cada.</li>
+      <li>Depois do almoço ou do jantar, nunca com fome.</li>
+      <li>Não acumula de uma semana para a outra.</li>
+    </ul>
+    <p class="note"><b>Quando apetecer doce:</b> come uma fruta ou um iogurte proteico, e vê se não saltaste nenhuma refeição. Muitas vezes é fome.</p>
+  </details>
+</section>
+
+<!-- TREINO -->
+<section class="view" id="v-treino">
+  <h2>Treinos do Vitor</h2>
+  <div class="week" id="week"></div>
+  <div id="treinoDay"></div>
+  <details class="card">
+    <summary>Como funciona</summary>
+    <div class="rule"><b>3 × 8–12</b><span>3 séries de 8 a 12 repetições.</span></div>
+    <div class="rule"><b>Peso</b><span>O peso que aparece é uma ideia. Escreve o peso que escolheste.</span></div>
+    <div class="rule"><b>Mesmo peso</b><span>Usa esse peso em todas as séries. Não mudes a meio.</span></div>
+    <div class="rule"><b>Repetições</b><span>Faz o máximo que conseguires bem feito, até 12 (ou até 15 nos exercícios que dizem 15). É normal fazer menos de série para série.</span></div>
+    <div class="rule"><b>Apontar</b><span>Escreve o peso, as repetições de cada série e, por baixo, como te sentiste.</span></div>
+    <div class="rule"><b>Descanso</b><span>Toca no tempo de descanso e o cronómetro começa a contar.</span></div>
+    <div class="rule"><b>Pesos novos</b><span>No fim do treino, envia-o à Rafaela. Os pesos de referência são atualizados todas as semanas a partir do que apontaste.</span></div>
+  </details>
+  <h2>Treinos feitos</h2>
+  <div class="card hist" id="hist"></div>
+</section>
+
+<!-- COMPRAS -->
+<section class="view" id="v-compras">
+  <h2>Compras da semana</h2>
+  <p class="lead">Marca cada coisa à medida que a pões no carrinho.</p>
+  <div class="prog" id="cProg"></div>
+
+  <div class="store" style="--sc:#2F8A4A;--qb:light-dark(#E3F2E7,#1D3626)">
+    <div class="sh"><span>Pingo Doce</span><span>27,35 €</span></div>
+    <label class="row"><input type="checkbox" data-c="pd-ovos"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Ovos<span class="q">30</span></span><span class="d" style="display:block">Ovos de Solo Classe M 24 un (6,49 €, preço a confirmar) + Ovos de Solo Classe M Pingo Doce 6 un (1,79 €)</span></span><span class="p">8,28 €</span></label>
+    <label class="row"><input type="checkbox" data-c="pd-pao"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Pão de forma<span class="q">1 pacote</span></span><span class="d" style="display:block">Pão de Forma Branco com Côdea Pingo Doce 600 g</span></span><span class="p">1,09 €</span></label>
+    <label class="row"><input type="checkbox" data-c="pd-wraps"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Wraps<span class="q">1 pacote de 8</span></span><span class="d" style="display:block">Tortilhas Wrap Pingo Doce</span></span><span class="p">1,09 €</span></label>
+    <label class="row"><input type="checkbox" data-c="pd-atum"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Atum<span class="q">7 latas</span></span><span class="d" style="display:block">Atum Posta ao Natural Pingo Doce, 0,94 € cada</span></span><span class="p">6,58 €</span></label>
+    <label class="row"><input type="checkbox" data-c="pd-macas"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Maçãs<span class="q">28</span></span><span class="d" style="display:block">Maçã Gala Embalada 1,5 kg: 3 sacos + 1 solta</span></span><span class="p">7,76 €</span></label>
+    <label class="row"><input type="checkbox" data-c="pd-leite"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Leite<span class="q">3 litros</span></span><span class="d" style="display:block">Leite UHT Meio Gordo Pingo Doce, 0,85 € cada</span></span><span class="p">2,55 €</span></label>
+  </div>
+
+  <div class="store" style="--sc:#C8372D;--qb:light-dark(#FCE7E5,#3A1F1C)">
+    <div class="sh"><span>Continente</span><span>13,61 €</span></div>
+    <label class="row"><input type="checkbox" data-c="ct-iog"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Iogurtes proteicos<span class="q">7</span></span><span class="d" style="display:block">+Proteína Stracciatella Continente, 1,09 € cada</span></span><span class="p">7,63 €</span></label>
+    <label class="row"><input type="checkbox" data-c="ct-saq"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Saquetas para a água<span class="q">2 caixas</span></span><span class="d" style="display:block">Prozis H2O Infusion (vê em baixo)</span></span><span class="p">5,98 €</span></label>
+  </div>
+
+  <div class="card">
+    <div class="tot big"><span>Total por semana</span><span>40,96 €</span></div>
+    <div class="tot muted"><span>4 semanas</span><b>163,84 €</b></div>
+  </div>
+  <button class="btn ghost full" id="newWeek" type="button">Nova semana: limpar a lista</button>
+
+  <h2>Saquetas para a água</h2>
+  <div class="infusion">
+    Antes de comprar, olha para o nome na caixa. Tem de dizer:
+    <div class="w">INFUSION</div>
+    Se disser outro nome (por exemplo “Burn”), não compres.
+  </div>
+  <div class="card">
+    <h3>Os sabores</h3>
+    <div class="flav"><span><i style="background:#F2C230"></i>Ananás</span><span><i style="background:#F08A24"></i>Laranja</span><span><i style="background:#E5484D"></i>Melancia</span><span><i style="background:#F4A27A"></i>Pêssego</span><span><i style="background:#C9D637"></i>Limão</span></div>
+    <p class="muted small">Escolhe o sabor de que gostares.</p>
+  </div>
+  <div class="card">
+    <h3>Como usar</h3>
+    <ol class="steps">
+      <li>Chegas ao trabalho</li>
+      <li>Enche 1 garrafa de 1,5 L até cima</li>
+      <li>Deita 1 saqueta</li>
+      <li>Fecha e abana bem</li>
+      <li>Bebe aos poucos durante o dia</li>
+      <li>Acabou? Enche outra garrafa com outra saqueta</li>
+    </ol>
+    <div class="two"><div><b>1 = 1</b>1 saqueta por cada garrafa de 1,5 L</div><div><b>2 × 1,5 L</b>= 3 litros por dia</div></div>
+    <div class="avoid" style="text-align:center"><b>Nada de sumo, nem às refeições.</b></div>
+  </div>
+</section>
+
+<!-- PESO -->
+<section class="view" id="v-peso">
+  <h2>Peso</h2>
+  <div class="card">
+    <div class="hero"><div><div class="muted small">Último peso</div><div class="v" id="pNow"></div></div><span class="delta" id="pDelta"></span></div>
+    <div class="goal"><div class="bar"><i id="pBar"></i></div><div class="lab"><span>Início 68,05</span><span>Mínimo 70</span><span>Meta 71 kg</span></div></div>
+  </div>
+  <div class="card" id="pNew"></div>
+  <div class="card"><h3>Evolução</h3><div class="fig"><svg id="chart" role="img" aria-label="Gráfico do peso"></svg></div></div>
+  <div class="card list" id="pList"></div>
+  <h2>Pesagens do teste</h2>
+  <div class="card plan" id="pPlan"></div>
+  <h2>Enviar à Rafaela</h2>
+  <div class="card">
+    <p class="muted small">Resumo da semana: pesagens, água e todos os treinos, com pesos, repetições e notas.</p>
+    <div class="row2"><a class="btn" id="waWeek" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn ghost" type="button" data-copy="week">Copiar</button></div>
+    <textarea class="copyBox" readonly hidden></textarea>
+  </div>
+  <p class="note2">Tudo o que apontas fica guardado online. A Rafaela vê o mesmo na app dela.</p>
+</section>
+</main>
+
+<div class="timer" id="timer" role="status" aria-live="polite">
+  <div class="t" id="tT">1:30</div><div class="l" id="tL">Descanso</div>
+  <button type="button" id="tPlus">+15 s</button><button type="button" id="tStop">Parar</button>
+</div>
+
+<nav class="tabs" aria-label="Separadores"><div class="in">
+  <a href="#hoje" data-v="hoje"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Hoje</a>
+  <a href="#comida" data-v="comida"><svg viewBox="0 0 24 24"><circle cx="13" cy="13" r="7.5"/><circle cx="13" cy="13" r="3.5"/><path d="M3 3.5v5.5M5 3.5v5.5M3 9h2M4 9v11.5"/></svg>Comida</a>
+  <a href="#treino" data-v="treino"><svg viewBox="0 0 24 24"><path d="M7 6.5v11M17 6.5v11M4 9v6M20 9v6M7 12h10"/></svg>Treino</a>
+  <a href="#compras" data-v="compras"><svg viewBox="0 0 24 24"><path d="M3 4h2.2l2.3 10.3a1.8 1.8 0 0 0 1.8 1.4h7.9a1.8 1.8 0 0 0 1.8-1.4L20.6 8H6.1"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>Compras</a>
+  <a href="#peso" data-v="peso"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8.3 10.5a4.2 4.2 0 0 1 7.4 0M12 10.8l1.7-2.6"/></svg>Peso</a>
+</div></nav>
+
+<script>
+{
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = n => String(n).padStart(2, '0');
+const iso = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const parseIso = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const ddmm = s => s.slice(8, 10) + '/' + s.slice(5, 7);
+const kgs = x => (Math.round(x * 100) / 100).toString().replace('.', ',');
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const WD = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+const MES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const now = new Date();
+const TODAY = iso(now);
+const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
+const clone = v => JSON.parse(JSON.stringify(v));
+
+/* ---------- plano de treino (pesos de referência do PT, atualizados todas as semanas; ele escolhe o peso que usa) ----------
+   [nome, nome no Brasil, vídeo do YouTube, séries, descanso, segundos, dica, peso de referência (kg)] */
+const yt = id => 'https://www.youtube.com/watch?v=' + id;
+const DAYS = {
+  seg: { n: 'Segunda', t: 'Peito, tríceps e ombros', c: '#E8743B', aq: 'Aquecer 6 a 8 minutos na passadeira ou na elíptica.', ex: [
+    ['Chest press em máquina', 'supino máquina', 'rfbmQ1os7E8', '3 × 8–12', '1 min e meio a 2 min', 120, 'Costas apoiadas; descer devagar', 35],
+    ['Press inclinado com halteres', 'supino inclinado com halteres', 'Ky_JXqloq0w', '3 × 8–12', '1 min e meio', 90, 'Banco pouco inclinado; pés firmes', 12.5],
+    ['Pec deck', 'voador', 'zEcIgGm7fxU', '2 × 10–15', '1 min e 15 s', 75, 'Sem perder o controlo', 30],
+    ['Press de ombros em máquina', 'desenvolvimento máquina', 'Q7K6DI9R-A8', '3 × 8–12', '1 min e meio', 90, 'Costas apoiadas; não encolher os ombros', 20],
+    ['Elevação lateral', 'elevação lateral', 'gURBTU9VSJg', '3 × 12–15', '1 min', 60, 'Sem balançar o corpo', 6],
+    ['Tríceps com corda', 'tríceps corda', '7le1JRUUagM', '3 × 10–15', '1 min', 60, 'Cotovelos junto ao corpo', 27],
+    ['Extensão de tríceps acima da cabeça no cabo', 'tríceps francês na polia', 'lkEoFfNyzkk', '2 × 10–15', '1 min', 60, 'Cotovelos parados', 9]]},
+  ter: { n: 'Terça', t: 'Costas, bíceps e ombros', c: '#3B7DD8', aq: 'Aquecer 6 a 8 minutos no remo ou na elíptica.', ex: [
+    ['Lat pulldown com pega neutra', 'puxada frontal com pegada neutra', 'uAnrJBnxrZ0', '3 × 8–12', '1 min e meio a 2 min', 120, 'Puxar com os cotovelos; sem balanço', 45],
+    ['Remada em T com apoio no peito', 'remada cavalinho com apoio', '1irSxCGkkpY', '3 × 8–12', '1 min e meio a 2 min', 120, 'Peito apoiado', 25],
+    ['Remada baixa sentada', 'remada baixa', '2YebbYuuBJQ', '3 × 10–12', '1 min e meio', 90, 'Tronco parado; voltar devagar', 35],
+    ['Pec deck invertida', 'crucifixo inverso na máquina', 'fxg1QRcuPzc', '3 × 12–15', '1 min', 60, 'Sem impulso', 15],
+    ['Curl de bíceps no cabo', 'rosca direta na polia', 'zqklqTcOsbo', '3 × 10–15', '1 min', 60, 'Cotovelos parados', 30],
+    ['Curl inclinado com halteres', 'rosca inclinada com halteres', 'KH_bjsWEVI8', '2 × 10–15', '1 min', 60, 'Ombros parados', 7.5]]},
+  qui: { n: 'Quinta', t: 'Pernas', c: '#3E9A55', aq: 'Aquecer 6 a 8 minutos na bicicleta.', ex: [
+    ['Cadeira extensora', 'cadeira extensora', 'WKqCZh9hdCc', '3 × 12–15', '1 min e 15 s', 75, 'Parar 1 segundo lá em cima', 45],
+    ['Flexão de pernas sentada', 'cadeira flexora', '41c1QR9GizQ', '3 × 10–15', '1 min e 15 s', 75, 'Voltar devagar', 25],
+    ['Prensa de pernas', 'leg press', 'EAibOhu4lAI', '3 × 10–12', '2 min', 120, 'Joelhos na direção dos pés; costas apoiadas', 55],
+    ['Gémeos na máquina', 'panturrilha na máquina', 'qWHH0We_9r0', '3 × 12–15', '1 min', 60, 'Subir e descer tudo', 30]]},
+  sex: { n: 'Sexta', t: 'Corpo inteiro', c: '#7B5CD6', aq: 'Aquecer 6 a 8 minutos na passadeira ou na bicicleta.', ex: [
+    ['Prensa de pernas', 'leg press', 'EAibOhu4lAI', '3 × 10–12', '1 min e meio a 2 min', 120, 'Joelhos na direção dos pés; costas apoiadas', 50],
+    ['Chest press em máquina', 'supino máquina', 'rfbmQ1os7E8', '3 × 8–12', '1 min e meio', 90, 'Costas apoiadas', 35],
+    ['Lat pulldown', 'puxada frontal', 'VvkmsDP-seQ', '3 × 8–12', '1 min e meio', 90, 'Puxar com os cotovelos', 45],
+    ['Remada em T com apoio no peito', 'remada cavalinho com apoio', '1irSxCGkkpY', '2 × 10–12', '1 min e meio', 90, 'Peito apoiado', 25],
+    ['Press de ombros em máquina', 'desenvolvimento máquina', 'Q7K6DI9R-A8', '2 × 10–12', '1 min e 15 s', 75, 'Costas apoiadas', 25],
+    ['Curl de bíceps no cabo', 'rosca direta na polia', 'zqklqTcOsbo', '2 × 10–15', '1 min', 60, 'Sem balanço', 30],
+    ['Tríceps com corda', 'tríceps corda', '7le1JRUUagM', '2 × 10–15', '1 min', 60, 'Braços junto ao corpo', 30]]}
+};
+const WEEK = [
+  { k: 'dom', s: 'Dom', rest: 'Descanso. Se quiseres, caminhada de 30 a 40 minutos.' },
+  { k: 'seg', s: 'Seg' }, { k: 'ter', s: 'Ter' },
+  { k: 'qua', s: 'Qua', rest: 'Descanso. O músculo cresce enquanto descansa.' },
+  { k: 'qui', s: 'Qui' }, { k: 'sex', s: 'Sex' },
+  { k: 'sab', s: 'Sáb', rest: 'Descanso.' }
+];
+const ORDER = [1, 2, 3, 4, 5, 6, 0];
+const rx = s => { const m = s.match(/(\d+)\s*×\s*(\d+)\D+(\d+)/); return { n: +m[1], lo: +m[2], hi: +m[3] }; };
+
+/* ---------- dados: guardados online (Supabase) e uma cópia neste telemóvel ---------- */
+const SB = 'https://lkifaxjszpcqlsfayozr.supabase.co';
+const SBK = 'sb_publishable_2DRHTHVNTtty9Z9yMC1SEQ_3XA0Vrtq';
+const VAPID = 'BLxkHvT3yD5sqaPH-pBSEoWT9LuIJMx2H8kDAYjYGlvi9FWb7-pvx__PtlPtESKIAo6SQ-37PcEoinfEgx-pvP8';
+const LS = 'vitor-v3', LQ = 'vitor-fila', LP = 'vitor-codigo';
+const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+const PARTS = ['treinos', 'agua', 'compras', 'peso'];
+function load() {
+  const d = { treinos: {}, agua: {}, compras: {}, peso: { '2026-11-09': 69, '2026-11-14': 68.05, '2026-11-21': 68.8 } };
+  try { const o = JSON.parse(lsGet(LS) || 'null'); if (o) for (const p of PARTS) if (isObj(o[p])) d[p] = o[p]; } catch (e) {}
+  return d;
+}
+const S = load();
+let PIN = lsGet(LP) || '';
+let Q = (() => { try { const q = JSON.parse(lsGet(LQ) || '[]'); return Array.isArray(q) ? q : []; } catch (e) { return []; } })();
+function saveLocal() { lsSet(LS, JSON.stringify(S)); if (typeof updateSend === 'function') updateSend(); }
+async function rpc(fn, args) {
+  const r = await fetch(SB + '/rest/v1/rpc/' + fn, { method: 'POST', headers: { apikey: SBK, 'Content-Type': 'application/json' }, body: JSON.stringify(args) });
+  if (!r.ok) throw new Error('http ' + r.status);
+  return r.json();
+}
+function setSync(st) {
+  const el = $('#sync'); if (!el) return;
+  el.className = 'sync' + (st === 'off' ? ' off' : st === 'busy' ? ' busy' : '');
+  el.querySelector('span').textContent = st === 'off' ? 'Sem internet: fica guardado e envia depois' : st === 'busy' ? 'A guardar…' : 'Tudo guardado ✓';
+}
+function enqueue(op) {
+  if (op.fn === 'limpar') Q = Q.filter(o => o.p !== 'compras');
+  else Q = Q.filter(o => !(o.fn === op.fn && o.p === op.p && o.k === op.k));
+  Q.push(op); lsSet(LQ, JSON.stringify(Q)); setSync('busy'); scheduleFlush(600);
+}
+const put = (p, k, v) => { if (v === undefined || v === null || v === false || v === 0) delete S[p][k]; else S[p][k] = v; saveLocal(); enqueue({ fn: 'guardar', p, k, v: S[p][k] ?? null }); };
+let flushing = false, fT = 0;
+function scheduleFlush(ms) { clearTimeout(fT); fT = setTimeout(flush, ms); }
+async function flush() {
+  if (flushing || !PIN) return;
+  if (!Q.length) { setSync('ok'); return; }
+  flushing = true;
+  try {
+    while (Q.length) {
+      const op = Q[0];
+      const res = op.fn === 'limpar' ? await rpc('app_limpar_compras', { p_pin: PIN })
+        : await rpc('app_guardar', { p_pin: PIN, p_parte: op.p, p_chave: op.k, p_valor: op.v ?? null });
+      if (res === 'codigo') { flushing = false; showGate('O código mudou. Escreve o código novo.'); return; }
+      Q.shift(); lsSet(LQ, JSON.stringify(Q));
+    }
+    setSync('ok');
+  } catch (e) { setSync('off'); scheduleFlush(15000); }
+  flushing = false;
+}
+async function pull(redraw) {
+  if (!PIN) return false;
+  try {
+    const d = await rpc('app_ler', { p_pin: PIN });
+    if (d && d.erro === 'codigo') { showGate('O código mudou. Escreve o código novo.'); return false; }
+    const est = isObj(d.estado) ? d.estado : {};
+    for (const p of ['treinos', 'agua', 'compras']) {
+      const merged = isObj(est[p]) ? { ...est[p] } : {};
+      if (p === 'compras' && Q.some(o => o.fn === 'limpar')) for (const k in merged) delete merged[k];
+      for (const o of Q) if (o.fn === 'guardar' && o.p === p) { if (S[p][o.k] !== undefined) merged[o.k] = S[p][o.k]; else delete merged[o.k]; }
+      S[p] = merged;
+    }
+    if (isObj(d.pesagens)) S.peso = Object.fromEntries(Object.entries(d.pesagens).map(([k, v]) => [k, Number(v)]));
+    saveLocal();
+    setSync(Q.length ? 'busy' : 'ok');
+    if (redraw) redrawSafe();
+    if (Q.length) scheduleFlush(300);
+    return true;
+  } catch (e) { setSync('off'); return null; }
+}
+function redrawSafe() {
+  const a = document.activeElement, typing = a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA');
+  renderHoje(); renderCompras(); renderPeso();
+  if (!typing) renderTreino(); else renderHist();
+}
+
+/* ---------- navegação ---------- */
+const VIEWS = ['hoje', 'comida', 'treino', 'compras', 'peso'];
+function route() {
+  const h = location.hash.slice(1);
+  const v = VIEWS.includes(h) ? h : 'hoje';
+  for (const x of VIEWS) $('#v-' + x).classList.toggle('on', x === v);
+  document.querySelectorAll('.tabs a').forEach(a => { const on = a.dataset.v === v; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  window.scrollTo(0, 0);
+  if (v === 'peso') drawChart();
+}
+window.addEventListener('hashchange', route);
+
+function renderHeader() {
+  $('#dateLine').textContent = cap(WD[now.getDay()]) + ', ' + now.getDate() + ' de ' + MES[now.getMonth()];
+  const day = Math.floor((parseIso(TODAY) - parseIso('2026-11-14')) / 864e5) + 1;
+  const chip = $('#testChip');
+  if (day >= 1 && day <= 30) { chip.hidden = false; chip.textContent = 'Dia ' + day + ' de 30'; } else chip.hidden = true;
+}
+
+/* ---------- treino ---------- */
+let selDay = WEEK[now.getDay()].k;
+const sessKey = dk => TODAY + '_' + dk;
+const SESS_RE = /^\d{4}-\d\d-\d\d_(seg|ter|qui|sex)$/;
+// cada série: [peso em kg, repetições] (a versão anterior guardava um só peso: x.kg + x.r)
+const sets = x => {
+  if (!isObj(x)) return [];
+  if (Array.isArray(x.s)) return x.s.map(a => Array.isArray(a) ? [String(a[0] ?? '').trim(), String(a[1] ?? '').trim()] : ['', '']);
+  if (Array.isArray(x.r)) return x.r.map(v => [v ? kgs(Number(x.kg) || 0) : '', String(v ?? '').trim()]);
+  return [];
+};
+const hasData = x => sets(x).some(a => a[0] || a[1]) || (isObj(x) && String(x.nota || '').trim() !== '');
+function sessionOf(k) { const s = S.treinos[k]; return isObj(s) && isObj(s.x) ? s : null; }
+function lastFor(dk, i) {
+  const keys = Object.keys(S.treinos).filter(k => SESS_RE.test(k) && k.endsWith('_' + dk) && k.slice(0, 10) < TODAY).sort().reverse();
+  for (const k of keys) { const s = sessionOf(k); if (s && hasData(s.x[i])) return { d: k.slice(0, 10), x: s.x[i] }; }
+  return null;
+}
+const totalSets = dk => DAYS[dk].ex.reduce((a, e) => a + rx(e[3]).n, 0);
+function doneSets(k) { const s = sessionOf(k); let n = 0; if (s) for (const i in s.x) n += sets(s.x[i]).filter(a => a[1]).length; return n; }
+function nextTraining() { for (let k = 1; k <= 7; k++) { const w = WEEK[(now.getDay() + k) % 7]; if (DAYS[w.k]) return w.k; } return 'seg'; }
+function fmtSets(x) {
+  const ss = sets(x).filter(a => a[0] || a[1]);
+  if (!ss.length) return 'nada apontado';
+  const ks = [...new Set(ss.map(a => a[0]))];
+  if (ks.length === 1 && ks[0]) return ks[0] + ' kg × ' + ss.map(a => a[1] || '?').join(', ');
+  return ss.map(a => (a[0] || '?') + ' kg × ' + (a[1] || '?')).join(', ');
+}
+function exLine(e, x, i) {
+  const r = rx(e[3]), rr = sets(x).map(a => a[1]).filter(Boolean);
+  const top = rr.length >= r.n && rr.slice(0, r.n).every(v => Number(v) >= r.hi);
+  let t = (i + 1) + '. ' + e[0] + ': ' + fmtSets(x) + (top ? ' (máximo em todas)' : '');
+  if (String(x.nota || '').trim()) t += '\n   Nota: ' + String(x.nota).trim();
+  return t;
+}
+function daySummary(k) {
+  const s = sessionOf(k); if (!s) return '';
+  const dk = k.slice(11), d = DAYS[dk], dt = parseIso(k.slice(0, 10));
+  const L = ['Treino de ' + WD[dt.getDay()] + ', ' + ddmm(k) + ' · ' + d.t];
+  d.ex.forEach((e, i) => { if (hasData(s.x[i])) L.push(exLine(e, s.x[i], i)); });
+  return L.length > 1 ? L.join('\n') : '';
+}
+function renderWeek() {
+  $('#week').innerHTML = ORDER.map(i => {
+    const w = WEEK[i], d = DAYS[w.k];
+    return `<button type="button" data-d="${w.k}" class="${w.k === selDay ? 'sel' : ''}" style="${d ? '--dc:' + d.c : ''}" aria-pressed="${w.k === selDay}">${w.s}<i></i><small>${i === now.getDay() ? 'hoje' : '&nbsp;'}</small></button>`;
+  }).join('');
+}
+function renderTreino() {
+  renderWeek();
+  const box = $('#treinoDay'), d = DAYS[selDay];
+  if (!d) {
+    const w = WEEK.find(x => x.k === selDay), nxt = nextTraining();
+    box.innerHTML = `<div class="dayhead" style="--dc:#55605A"><h3>Dia de descanso</h3><p>${esc(w.rest)}</p></div>
+      <div class="card"><p>Próximo treino: <b>${esc(DAYS[nxt].n)}</b> · ${esc(DAYS[nxt].t)}.</p><p class="muted small" style="margin:0">Toca num dia em cima para ver os exercícios.</p></div>`;
+    renderHist(); return;
+  }
+  const s = sessionOf(sessKey(selDay)) || { x: {} };
+  const isToday = selDay === WEEK[now.getDay()].k;
+  let h = `<div class="dayhead" style="--dc:${d.c}"><h3>${esc(d.n)} · ${esc(d.t)}</h3><p>${esc(d.aq)}</p>
+    <p class="small" style="opacity:.85">${isToday ? 'Fica apontado no treino de hoje.' : 'Fica apontado hoje (' + ddmm(TODAY) + '), como treino de ' + esc(d.n.toLowerCase()) + '.'}</p></div>`;
+  d.ex.forEach((e, i) => {
+    const r = rx(e[3]), x = isObj(s.x[i]) ? s.x[i] : {}, ss = sets(x), last = lastFor(selDay, i);
+    let rows = '';
+    for (let j = 0; j < r.n; j++) {
+      const v = ss[j] || ['', ''];
+      rows += `<div class="set ${v[1] ? 'done' : ''}"><span>${j + 1}ª série</span>
+        <div class="inp"><input inputmode="decimal" autocomplete="off" aria-label="${esc(e[0])}, série ${j + 1}, peso em kg" data-i="${i}" data-j="${j}" data-f="0" value="${esc(v[0])}" placeholder="—"><span>kg</span></div>
+        <div class="inp"><input inputmode="numeric" autocomplete="off" aria-label="${esc(e[0])}, série ${j + 1}, repetições" data-i="${i}" data-j="${j}" data-f="1" value="${esc(v[1])}" placeholder="${r.lo}–${r.hi}"><span>reps</span></div></div>`;
+    }
+    let lastTxt = 'Primeira vez com este exercício na app.';
+    if (last) { lastTxt = 'Última vez (' + ddmm(last.d) + '): ' + esc(fmtSets(last.x)); if (String(last.x.nota || '').trim()) lastTxt += ' · Nota: ' + esc(String(last.x.nota).trim()); }
+    h += `<div class="card ex" style="--dc:${d.c}"><div class="hd"><span class="num">${i + 1}</span><div>
+      <div class="name">${esc(e[0])}</div><div class="br">${esc(e[1])}</div>
+      <a class="vid" href="${yt(e[2])}" target="_blank" rel="noopener">▶ Ver vídeo de como se faz</a></div></div>
+      <div class="pills"><span class="pill">${r.n} × ${r.lo}–${r.hi}</span><button type="button" class="pill" data-rest="${e[5]}" aria-label="Começar descanso de ${esc(e[4])}"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>${esc(e[4])}</button></div>
+      <div class="kgbox"><span class="l">Peso<br>em todas as séries</span><b>${kgs(e[7])} kg</b></div>
+      <div class="tip" style="margin-top:8px">${esc(e[6])}</div>
+      <div class="sets">${rows}</div>
+      <label class="nl" for="nota-${i}">Como correu?</label>
+      <textarea class="nota" id="nota-${i}" data-nota="${i}" rows="2" placeholder="Ex.: o peso estava pesado e só aguentei 8. Ou: dava para mais.">${esc(x.nota || '')}</textarea>
+      <div class="last">${lastTxt}</div></div>`;
+  });
+  h += `<div class="card send"><h3>Acabaste o treino?</h3><p class="small">Envia-o à Rafaela, com os pesos, as repetições e as notas.</p>
+    <div class="row2"><a class="btn" id="waDay" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn ghost" type="button" data-copy="day">Copiar</button></div>
+    <textarea class="copyBox" readonly hidden></textarea></div>`;
+  box.innerHTML = h;
+  renderHist(); updateSend();
+}
+function renderHist() {
+  const keys = Object.keys(S.treinos).filter(k => SESS_RE.test(k) && daySummary(k)).sort().reverse().slice(0, 20);
+  $('#hist').innerHTML = keys.length ? keys.map(k => {
+    const dk = k.slice(11), d = DAYS[dk], dt = parseIso(k.slice(0, 10));
+    const body = daySummary(k).split('\n').slice(1).join('\n');
+    return `<details style="--dc:${d.c}"><summary><span><i></i><b>${cap(WD[dt.getDay()]).slice(0, 3)} ${ddmm(k)}</b> · ${esc(d.t)}</span><span class="muted">${doneSets(k)} ${doneSets(k) === 1 ? 'série' : 'séries'}</span></summary><div class="det">${esc(body)}</div></details>`;
+  }).join('') : '<p class="muted" style="margin:0">Ainda não há treinos apontados. Quando escreveres o peso e as repetições, o treino aparece aqui. Toca num treino para ver tudo o que fizeste.</p>';
+}
+function saveTreino() { const k = sessKey(selDay); saveLocal(); enqueue({ fn: 'guardar', p: 'treinos', k, v: S.treinos[k] }); }
+function ensure(i) {
+  const k = sessKey(selDay);
+  const s = S.treinos[k] = sessionOf(k) || { x: {} };
+  const x = s.x[i] = isObj(s.x[i]) ? s.x[i] : {};
+  if (!Array.isArray(x.s)) { x.s = sets(x); delete x.r; delete x.kg; }
+  return x;
+}
+$('#week').addEventListener('click', ev => { const b = ev.target.closest('button[data-d]'); if (!b) return; selDay = b.dataset.d; renderTreino(); });
+$('#treinoDay').addEventListener('input', ev => {
+  const t = ev.target;
+  if (t.dataset.nota !== undefined) { ensure(+t.dataset.nota).nota = t.value.slice(0, 500); saveTreino(); return; }
+  if (t.dataset.j === undefined) return;
+  const f = +t.dataset.f;
+  const clean = f === 0 ? t.value.replace(/[^0-9.,]/g, '').slice(0, 6) : t.value.replace(/\D/g, '').slice(0, 3);
+  if (clean !== t.value) t.value = clean;
+  const x = ensure(+t.dataset.i), j = +t.dataset.j;
+  while (x.s.length <= j) x.s.push(['', '']);
+  x.s[j][f] = clean;
+  t.closest('.set').classList.toggle('done', !!x.s[j][1]);
+  saveTreino(); renderHoje(); renderHist();
+});
+$('#treinoDay').addEventListener('change', ev => { const d = ev.target.dataset; if (d.nota !== undefined || d.j !== undefined) renderHist(); });
+$('#treinoDay').addEventListener('click', ev => {
+  const b = ev.target.closest('[data-rest]'); if (b) startTimer(+b.dataset.rest);
+});
+
+/* ---------- cronómetro ---------- */
+let tEnd = 0, tInt = 0, actx = null;
+function beep() { try { if (!actx) return; const o = actx.createOscillator(), g = actx.createGain(); o.frequency.value = 880; o.connect(g); g.connect(actx.destination); g.gain.setValueAtTime(.25, actx.currentTime); g.gain.exponentialRampToValueAtTime(.001, actx.currentTime + .6); o.start(); o.stop(actx.currentTime + .6); } catch (e) {} }
+function tick() {
+  const left = Math.max(0, Math.round((tEnd - Date.now()) / 1000));
+  $('#tT').textContent = Math.floor(left / 60) + ':' + pad(left % 60);
+  if (left === 0) { clearInterval(tInt); tInt = 0; $('#timer').classList.add('end'); $('#tL').textContent = 'Acabou o descanso. Próxima série!'; beep(); try { navigator.vibrate && navigator.vibrate([250, 120, 250]); } catch (e) {} }
+}
+function startTimer(sec) {
+  try { if (!actx) { const A = window.AudioContext || window.webkitAudioContext; if (A) actx = new A(); } if (actx && actx.state === 'suspended') actx.resume(); } catch (e) {}
+  tEnd = Date.now() + sec * 1000;
+  $('#timer').classList.add('on'); $('#timer').classList.remove('end'); $('#tL').textContent = 'Descanso';
+  clearInterval(tInt); tInt = setInterval(tick, 250); tick();
+}
+$('#tPlus').addEventListener('click', () => { if (!tInt) { startTimer(15); return; } tEnd += 15000; tick(); });
+$('#tStop').addEventListener('click', () => { clearInterval(tInt); tInt = 0; $('#timer').classList.remove('on', 'end'); });
+
+/* ---------- peso: só ao sábado, não dá para mudar nem apagar ---------- */
+const TEST_END = '2026-12-12';
+const pesos = () => Object.entries(S.peso).filter(([d, kg]) => /^\d{4}-\d\d-\d\d$/.test(d) && isFinite(kg)).map(([d, kg]) => ({ d, kg: Number(kg) })).sort((a, b) => a.d < b.d ? -1 : 1);
+const isWeighDay = s => parseIso(s).getDay() === 6 && s >= '2026-11-21';
+const loggedOn = s => pesos().find(p => p.d === s);
+function nextWeigh() { const d = parseIso(TODAY); d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7 || 7)); return iso(d); }
+const PLAN = [
+  { d: '2026-11-21', l: 'Sáb 21/11', e: 'pesagem' },
+  { d: '2026-11-28', l: 'Sáb 28/11', e: 'esperado 69,3 a 69,5 kg' },
+  { d: '2026-12-05', l: 'Sáb 5/12', e: 'esperado 69,8 a 70,2 kg' },
+  { d: '2026-12-12', l: 'Sáb 12/12', e: 'fim do teste: 70 a 71 kg + 4 fotos' }
+];
+let pend = null;
+const fotos = 'Tira também as 4 fotos: frente, costas, lado direito e lado esquerdo.';
+function renderNew() {
+  const box = $('#pNew'), got = loggedOn(TODAY);
+  if (isWeighDay(TODAY) && got) {
+    box.innerHTML = `<h3>Pesagem de hoje feita</h3><div class="bigkg">${kgs(got.kg)} kg</div><p class="muted small" style="margin:0">Fica registado. Próxima: sábado, ${ddmm(nextWeigh())}.</p>`;
+  } else if (isWeighDay(TODAY) && pend !== null) {
+    box.innerHTML = `<h3>Confirmas?</h3><div class="bigkg">${kgs(pend)} kg</div><p class="small">Depois de guardar, já não dá para mudar nem apagar.</p>
+      <div class="row2"><button class="btn" type="button" id="pYes">Sim, guardar</button><button class="btn ghost" type="button" id="pNo">Corrigir</button></div>`;
+  } else if (isWeighDay(TODAY)) {
+    box.innerHTML = `<h3>Pesagem de hoje</h3><p class="muted small" style="margin:2px 0 0">${cap(WD[6])}, ${ddmm(TODAY)} · de manhã, em jejum, depois de ires à casa de banho.${TODAY === TEST_END ? ' ' + fotos : ''}</p>
+      <form class="wform" id="pForm"><div class="inp"><input id="pKg" inputmode="decimal" autocomplete="off" placeholder="69,4" aria-label="Peso em kg"><span>kg</span></div><button class="btn" type="submit">Guardar</button></form><p class="err" id="pErr"></p>`;
+  } else {
+    const nx = nextWeigh();
+    box.innerHTML = `<h3>Próxima pesagem</h3><div class="bigkg" style="font-size:34px">Sábado, ${ddmm(nx)}</div>
+      <p class="muted small" style="margin:0">De manhã, em jejum, depois de ires à casa de banho. Só nesse dia é que dá para apontar o peso.${nx === TEST_END ? ' ' + fotos : ''}</p>`;
+  }
+}
+function renderPeso() {
+  const ps = pesos(), last = ps[ps.length - 1], base = ps.find(p => p.d === '2026-11-14') || ps[0];
+  $('#pNow').innerHTML = last ? kgs(last.kg) + '<small> kg</small>' : '—';
+  const df = last && base ? last.kg - base.kg : 0, de = $('#pDelta');
+  de.textContent = (df >= 0 ? '+' : '−') + kgs(Math.abs(df)) + ' kg desde 14/11';
+  de.classList.toggle('neg', df < 0);
+  $('#pBar').style.width = (last ? Math.max(0, Math.min(100, (last.kg - 68.05) / (71 - 68.05) * 100)) : 0) + '%';
+  $('#pList').innerHTML = '<h3 style="margin-bottom:4px">Todas as pesagens</h3>' + ps.slice().reverse().map((p, k, a) => {
+    const prev = a[k + 1], dd = prev ? p.kg - prev.kg : null;
+    return `<div class="r" style="grid-template-columns:minmax(0,1fr) auto"><span>${WD[parseIso(p.d).getDay()].slice(0, 3)} ${ddmm(p.d)}</span><span><span class="kg">${kgs(p.kg)} kg</span> ${dd === null ? '' : `<span class="df ${dd < 0 ? 'neg' : ''}">${dd >= 0 ? '+' : '−'}${kgs(Math.abs(dd))}</span>`}</span></div>`;
+  }).join('');
+  $('#pPlan').innerHTML = PLAN.map(x => {
+    const got = ps.find(p => p.d === x.d);
+    return `<div class="r"><b>${x.l}</b><span class="muted small">${x.e}</span>${got ? `<span class="ok">${kgs(got.kg)} kg ✓</span>` : (x.d < TODAY ? '<span class="muted small">falta</span>' : '<span></span>')}</div>`;
+  }).join('');
+  renderNew(); drawChart();
+}
+$('#pNew').addEventListener('submit', ev => {
+  ev.preventDefault();
+  const kg = parseFloat(($('#pKg').value || '').replace(',', '.'));
+  if (!(kg >= 40 && kg <= 150)) { $('#pErr').textContent = 'Escreve o peso em kg, por exemplo 69,4.'; return; }
+  pend = Math.round(kg * 100) / 100; renderNew();
+});
+$('#pNew').addEventListener('click', ev => {
+  if (ev.target.id === 'pNo') { pend = null; renderNew(); return; }
+  if (ev.target.id === 'pYes' && pend !== null && isWeighDay(TODAY) && !loggedOn(TODAY)) {
+    const b = ev.target; b.disabled = true; b.textContent = 'A guardar…';
+    rpc('app_pesar', { p_pin: PIN, p_kg: pend }).then(r => {
+      if (r && r.dia) { S.peso[r.dia] = Number(r.kg); pend = null; saveLocal(); renderPeso(); renderHoje(); return; }
+      pend = null; renderNew();
+      $('#pNew').insertAdjacentHTML('beforeend', '<p class="err">' + (r && r.erro === 'so_sabado' ? 'O peso só se aponta ao sábado.' : 'Não deu para guardar. Tenta outra vez.') + '</p>');
+    }).catch(() => { b.disabled = false; b.textContent = 'Sim, guardar'; $('#pNew').insertAdjacentHTML('beforeend', '<p class="err">Sem internet. Liga a internet e carrega outra vez em "Sim, guardar".</p>'); });
+  }
+});
+const chart = $('#chart');
+function drawChart() {
+  const W = chart.clientWidth, H = chart.clientHeight; if (!W || !H) return;
+  const ps = pesos(), t = s => parseIso(s).getTime();
+  const x0 = Math.min(t('2026-11-08'), ...ps.map(p => t(p.d))), x1 = Math.max(t('2026-12-13'), ...ps.map(p => t(p.d)));
+  const y0 = Math.min(67.5, ...ps.map(p => p.kg - .3)), y1 = Math.max(71.5, ...ps.map(p => p.kg + .3));
+  const L = 34, R = 10, T = 12, B = 26;
+  const X = v => L + (v - x0) / (x1 - x0) * (W - L - R), Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
+  const ink = getComputedStyle(document.body).color, mute = getComputedStyle($('.muted')).color, xe = X(t(TEST_END));
+  let g = `<rect x="${L}" y="${Y(71)}" width="${W - L - R}" height="${Y(70) - Y(71)}" fill="#3E9A55" opacity=".16"/>`;
+  g += `<text x="${Math.min(W - R - 4, xe - 6)}" y="${Y(71) + 15}" text-anchor="end" font-size="12" font-weight="600" fill="#3E9A55">meta 70–71 kg</text>`;
+  for (let v = Math.ceil(y0); v <= y1; v++) g += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="${mute}" stroke-opacity=".25"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="${mute}">${v}</text>`;
+  g += `<line x1="${xe}" x2="${xe}" y1="${T}" y2="${H - B}" stroke="${mute}" stroke-dasharray="3 4"/><text x="${xe}" y="${H - 8}" text-anchor="middle" font-size="11" fill="${mute}">12/12</text>`;
+  if (ps.length) g += `<text x="${X(t(ps[0].d))}" y="${H - 8}" font-size="11" fill="${mute}">${ddmm(ps[0].d)}</text>`;
+  if (ps.length > 1) g += `<path d="${ps.map((p, i) => (i ? 'L' : 'M') + X(t(p.d)).toFixed(1) + ' ' + Y(p.kg).toFixed(1)).join('')}" fill="none" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  ps.forEach((p, i) => {
+    const cx = X(t(p.d)), cy = Y(p.kg), lp = i === ps.length - 1;
+    g += `<circle cx="${cx}" cy="${cy}" r="${lp ? 6 : 4.5}" fill="${lp ? '#3E9A55' : ink}" style="stroke:var(--card)" stroke-width="2"/>`;
+    if (lp || W > 420) g += `<text x="${cx}" y="${cy - 11}" text-anchor="middle" font-size="12" font-weight="700" fill="${ink}">${kgs(p.kg)}</text>`;
+  });
+  chart.innerHTML = g;
+}
+const ro = new ResizeObserver(drawChart); ro.observe(chart);
+
+/* ---------- hoje ---------- */
+const MEALS = [
+  { h: 6, n: 'Pequeno-almoço', it: '3 ovos mexidos ou omelete · 2 fatias de pão · batido (300 ml de leite + 1 dose de whey)' },
+  { h: 10, n: 'Lanche da manhã', it: '1 peça de fruta' },
+  { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · 150 g de frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' },
+  { h: 17, n: 'Lanche da tarde', it: 'Wrap de atum + ovo mexido, iogurte proteico e fruta. Ou a caixa: 150 g de arroz ou batata, atum ou 2 ovos, iogurte proteico' },
+  { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · 150 g de frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' }
+];
+const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const pushOK = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+function renderAvisos() {
+  const box = $('#avisos'); if (!box) return;
+  let h = '';
+  if (isIOS() && !isStandalone()) {
+    h = '<b>Instala a app no telemóvel</b><p class="small" style="margin:4px 0 0">No Safari, toca no botão <b>Partilhar</b> (o quadrado com a seta para cima) e depois em <b>Adicionar ao ecrã principal</b>. A seguir abre a app pelo ícone. Só assim recebes o aviso de sábado.</p>';
+  } else if (!pushOK()) {
+    h = '';
+  } else if (Notification.permission === 'granted' && lsGet('vitor-avisos') === '1') {
+    h = '';
+  } else if (Notification.permission === 'denied') {
+    h = '<b>Avisos desligados</b><p class="small" style="margin:4px 0 0">Para receberes o aviso de sábado, liga as notificações da app nas Definições do telemóvel.</p>';
+  } else {
+    h = '<b>Aviso de sábado</b><p class="small" style="margin:4px 0 0">Todos os sábados de manhã recebes um aviso para te pesares.</p><button type="button" class="btn full" id="ativarAvisos">Ativar avisos</button><p class="err" id="avisoErr"></p>';
+  }
+  box.innerHTML = h ? '<div class="card notif">' + h + '</div>' : '';
+}
+const b64u = s => { const p = '='.repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from([...b].map(c => c.charCodeAt(0))); };
+async function subscribePush(test) {
+  const reg = await navigator.serviceWorker.ready;
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(VAPID) });
+  const j = sub.toJSON();
+  const r = await rpc('app_aviso', { p_pin: PIN, p_sub: j });
+  if (r !== 'ok') throw new Error(r);
+  lsSet('vitor-avisos', '1');
+  if (test) fetch(SB + '/functions/v1/aviso-sabado', { method: 'POST', headers: { apikey: SBK, 'Content-Type': 'application/json' }, body: JSON.stringify({ teste: true, pin: PIN, sub: j }) }).catch(() => {});
+}
+document.addEventListener('click', async ev => {
+  if (ev.target.id !== 'ativarAvisos') return;
+  const b = ev.target; b.disabled = true; b.textContent = 'A ativar…';
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') await subscribePush(true);
+  } catch (e) { const er = $('#avisoErr'); if (er) er.textContent = 'Não deu para ativar. Confirma que tens internet e tenta outra vez.'; b.disabled = false; b.textContent = 'Ativar avisos'; return; }
+  renderAvisos();
+});
+function renderHoje() {
+  renderAvisos();
+  const wd = now.getDay(), w = WEEK[wd], d = DAYS[w.k];
+  let ban = '';
+  if (isWeighDay(TODAY)) {
+    const got = loggedOn(TODAY);
+    ban = got ? `<div class="banner"><b>Pesagem feita: ${kgs(got.kg)} kg ✓</b>${TODAY === TEST_END ? 'Não te esqueças das 4 fotos: frente, costas, lado direito e lado esquerdo.' : 'Boa! Próxima no sábado, ' + ddmm(nextWeigh()) + '.'}</div>`
+      : `<div class="banner"><b>${TODAY === TEST_END ? 'Último dia do teste' : 'Hoje é dia de te pesares'}</b>De manhã, em jejum, depois de ires à casa de banho.${TODAY === TEST_END ? ' ' + fotos : ''}<br><a class="btn" href="#peso" style="margin-top:10px;background:#6B4E00;color:#fff">Apontar o peso</a></div>`;
+  }
+  $('#hojeBanner').innerHTML = ban;
+  if (d) {
+    const k = sessKey(w.k), tot = totalSets(w.k), done = Math.min(doneSets(k), tot);
+    $('#hojeTreino').innerHTML = `<div class="card today" style="--dc:${d.c}"><div class="k">Treino de hoje</div><h3>${esc(d.t)}</h3>
+      <div>${d.ex.length} exercícios · ${tot} séries</div><div class="meter"><i style="width:${Math.round(done / tot * 100)}%"></i></div>
+      <div class="small" style="margin-top:4px">${done ? done + ' de ' + tot + ' séries apontadas' : 'Ainda não começaste'}</div>
+      <a class="btn" href="#treino">${done ? 'Continuar treino' : 'Abrir treino'}</a></div>`;
+  } else {
+    const nk = nextTraining();
+    $('#hojeTreino').innerHTML = `<div class="card today" style="--dc:#55605A"><div class="k">Hoje</div><h3>Dia de descanso</h3><div>${esc(w.rest)}</div>
+      <div class="small" style="margin-top:6px">Próximo treino: ${esc(DAYS[nk].n.toLowerCase())}, ${esc(DAYS[nk].t.toLowerCase())}.</div></div>`;
+  }
+  const b = Number(S.agua[TODAY]) || 0;
+  $('#aguaTxt').textContent = b >= 2 ? 'Feito! 3 litros hoje.' : (b === 1 ? '1,5 L de 3 L. Falta 1 garrafa.' : 'Toca numa garrafa quando a acabares.');
+  $('#bottles').innerHTML = [1, 2].map(n => `<button type="button" class="bottle ${b >= n ? 'full' : ''}" data-b="${n}" aria-pressed="${b >= n}">
+    <svg viewBox="0 0 28 56"><path d="M10 2h8v6l3 4v40a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V12l3-4z" fill="none" stroke="currentColor" stroke-width="2"/><path class="w" d="M8.5 20h11v32a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1z"/></svg>
+    <span><b>Garrafa ${n}</b><span class="muted small">1,5 L + 1 saqueta</span></span></button>`).join('');
+  const hr = now.getHours() + now.getMinutes() / 60;
+  let m = MEALS.find(x => x.h + 1 > hr), tomorrow = false;
+  if (!m) { m = MEALS[0]; tomorrow = true; }
+  $('#hojeMeal').innerHTML = `<div class="muted small">${tomorrow ? 'Amanhã' : (hr >= m.h ? 'Agora' : 'A seguir')}</div>
+    <div style="display:flex;gap:12px;align-items:baseline"><span class="h">${m.h}h</span><h3>${esc(m.n)}</h3></div>
+    <p style="margin:6px 0 10px">${esc(m.it)}</p><a class="btn ghost full" href="#comida">Ver o plano do dia</a>`;
+  document.querySelectorAll('.meal').forEach(el => el.classList.toggle('now', !tomorrow && +el.dataset.h === m.h));
+}
+$('#bottles').addEventListener('click', ev => {
+  const bt = ev.target.closest('[data-b]'); if (!bt) return;
+  const n = +bt.dataset.b, b = Number(S.agua[TODAY]) || 0;
+  put('agua', TODAY, b >= n ? n - 1 : n); renderHoje();
+});
+
+/* ---------- compras ---------- */
+const CB = [...document.querySelectorAll('[data-c]')];
+function renderCompras() {
+  let n = 0;
+  CB.forEach(c => { c.checked = !!S.compras[c.dataset.c]; if (c.checked) n++; });
+  $('#cProg').textContent = n === CB.length ? 'Tudo no carrinho!' : n + ' de ' + CB.length + ' no carrinho';
+}
+CB.forEach(c => c.addEventListener('change', () => { put('compras', c.dataset.c, c.checked || null); renderCompras(); }));
+let nwT = 0;
+$('#newWeek').addEventListener('click', ev => {
+  const b = ev.currentTarget;
+  if (!b.classList.contains('danger')) { b.classList.add('danger'); b.textContent = 'Toca outra vez para limpar'; clearTimeout(nwT); nwT = setTimeout(() => { b.classList.remove('danger'); b.textContent = 'Nova semana: limpar a lista'; }, 3500); return; }
+  clearTimeout(nwT); S.compras = {}; saveLocal(); enqueue({ fn: 'limpar' }); renderCompras();
+  b.classList.remove('danger'); b.textContent = 'Lista limpa ✓'; setTimeout(() => { b.textContent = 'Nova semana: limpar a lista'; }, 2000);
+});
+
+/* ---------- enviar à Rafaela ---------- */
+function weekSummary() {
+  const st = parseIso(TODAY); st.setDate(st.getDate() - (st.getDay() + 6) % 7);
+  const days = [...Array(7)].map((_, k) => { const d = new Date(st); d.setDate(st.getDate() + k); return iso(d); });
+  const L = ['Semana do Vitor (' + ddmm(days[0]) + ' a ' + ddmm(days[6]) + ')'];
+  const ps = pesos();
+  if (ps.length) L.push('Peso: ' + ps.map(p => ddmm(p.d) + ' ' + kgs(p.kg) + ' kg').join(' · '));
+  L.push('Água: ' + days.filter(d => d <= TODAY).map(d => WD[parseIso(d).getDay()].slice(0, 3) + ' ' + ((Number(S.agua[d]) || 0) * 1.5).toString().replace('.', ',') + ' L').join(' · '));
+  const ks = Object.keys(S.treinos).filter(k => SESS_RE.test(k) && days.includes(k.slice(0, 10))).sort();
+  const tx = ks.map(daySummary).filter(Boolean);
+  L.push('', tx.length ? tx.join('\n\n') : 'Ainda sem treinos apontados esta semana.');
+  return L.join('\n');
+}
+const dayText = () => daySummary(sessKey(selDay)) || 'Ainda não apontei nada neste treino.';
+function updateSend() {
+  const a = $('#waDay'); if (a) a.href = 'https://wa.me/?text=' + encodeURIComponent(dayText());
+  const w = $('#waWeek'); if (w) w.href = 'https://wa.me/?text=' + encodeURIComponent(weekSummary());
+}
+document.addEventListener('click', async ev => {
+  const b = ev.target.closest('[data-copy]'); if (!b) return;
+  const txt = b.dataset.copy === 'day' ? dayText() : weekSummary(), old = b.textContent;
+  try { await navigator.clipboard.writeText(txt); b.textContent = 'Copiado ✓'; setTimeout(() => { b.textContent = old; }, 2000); }
+  catch (e) { const t = b.closest('.card').querySelector('.copyBox'); t.hidden = false; t.value = txt; t.focus(); t.select(); b.textContent = 'Copia em baixo'; }
+});
+
+/* ---------- arranque ---------- */
+function showGate(msg) {
+  PIN = ''; lsSet(LP, '');
+  $('#gate').hidden = false; $('#gateErr').textContent = msg || '';
+  setTimeout(() => { try { $('#gateIn').focus(); } catch (e) {} }, 50);
+}
+$('#gateForm').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const code = $('#gateIn').value.replace(/\D/g, '');
+  const btn = ev.target.querySelector('button'), er = $('#gateErr');
+  if (code.length < 4) { er.textContent = 'Escreve o código de 6 números.'; return; }
+  btn.disabled = true; btn.textContent = 'A entrar…'; er.textContent = '';
+  try {
+    const d = await rpc('app_ler', { p_pin: code });
+    if (d && d.erro === 'codigo') { er.textContent = 'Código errado. Tenta outra vez.'; }
+    else { PIN = code; lsSet(LP, code); $('#gate').hidden = true; await pull(true); flush(); if (pushOK() && Notification.permission === 'granted') subscribePush(false).catch(() => {}); }
+  } catch (e) { er.textContent = 'Sem internet. Liga a internet e tenta outra vez.'; }
+  btn.disabled = false; btn.textContent = 'Entrar';
+});
+renderHeader(); renderHoje(); renderTreino(); renderCompras(); renderPeso(); route(); updateSend();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+if (!PIN) showGate();
+else {
+  pull(true).then(() => flush());
+  if (pushOK() && Notification.permission === 'granted') subscribePush(false).catch(() => {});
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && PIN) pull(true).then(() => flush()); });
+window.addEventListener('online', () => { if (PIN) flush(); });
+}
+</script>
+</body>
+</html>
