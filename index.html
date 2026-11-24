@@ -257,6 +257,27 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 .sync.off i{background:#E0A040}.sync.busy i{background:#BFCBC3}
 .notif{border:1px solid var(--line)}
 .notif .btn{margin-top:10px}
+
+.it2{border-top:1px solid var(--line)}
+.store .it2:first-of-type{border-top:0}
+.it2 .row{border-top:0}
+.haveb{display:block;margin:-6px 0 8px 54px;padding:4px 0;min-height:32px;border:0;background:none;font-size:13.5px;font-weight:600;color:var(--mute);text-decoration:underline;cursor:pointer}
+.it2.have .row{opacity:.5}
+.it2.have .cb{visibility:hidden}
+.it2.have .p{text-decoration:line-through}
+.it2.have .n::after{content:'Já tens em casa';margin-left:6px;font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--soft);border:1px solid var(--line);color:var(--mute)}
+.wkbar{background:var(--band);color:#fff;border-radius:14px;padding:12px 14px}
+.wkbar b{display:block;font:700 24px/1.1 'Barlow Condensed',sans-serif}
+.wkbar span{font-size:13.5px;color:#C9D3CD}
+.plan{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--dc) 12%,var(--card));border:1px solid color-mix(in srgb,var(--dc) 35%,transparent)}
+.plan .pl b{display:block;font:700 40px/1 'Barlow Condensed',sans-serif;color:var(--dc);white-space:nowrap}
+.plan .pl span{display:block;font-size:13.5px;color:var(--mute);margin-top:4px;line-height:1.25}
+.plan .pk{text-align:right;flex:none}
+.plan .pk span{display:block;font-size:13px;color:var(--mute);font-weight:600;line-height:1.2}
+.plan .pk b{display:block;font:700 36px/1 'Barlow Condensed',sans-serif;white-space:nowrap;margin:2px 0}
+.tot.big span:last-child{white-space:nowrap}
+.restb{display:flex;align-items:center;gap:8px;margin-top:8px;width:100%;min-height:44px;border-radius:12px;border:1px dashed var(--line);background:none;font-weight:600;font-size:15px;color:var(--ink);padding:0 12px;cursor:pointer;text-align:left}
+.restb svg{width:18px;height:18px;fill:none;stroke:var(--dc);stroke-width:2.2;stroke-linecap:round;flex:none}
 @media (max-width:370px){.set{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr)}.rule{grid-template-columns:80px minmax(0,1fr)}.form{grid-template-columns:1fr 1fr}.form .btn{grid-column:1/-1}.plan .r{grid-template-columns:92px minmax(0,1fr) auto}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -272,7 +293,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <img src="icon-192.png" alt="">
   <h1>App do Vitor</h1>
   <p>Escreve o código da app. Só é preciso uma vez.</p>
-  <form id="gateForm"><input id="gateIn" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="······" aria-label="Código da app"><button class="btn" type="submit">Entrar</button></form>
+  <form id="gateForm"><input id="gateIn" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="···" aria-label="Código da app"><button class="btn" type="submit">Entrar</button></form>
   <p class="err" id="gateErr"></p>
 </div></div>
 
@@ -309,7 +330,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="meal" data-h="12" style="--mc:var(--ink)"><div class="h">12h</div><div class="card">
     <h3>Almoço</h3>
     <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>300 g</b></div>
-    <div class="it"><span>Frango, peru ou peixe</span><b>150 g</b></div>
+    <div class="it"><span>Frango, peru ou peixe <small class="muted" style="display:block;font-size:13px">pelo menos 1 bife</small></span><b>à vontade</b></div>
     <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
     <div class="it"><span>Azeite</span><b>1 colher</b></div>
     <div class="it"><span>Fruta</span><b>1 peça</b></div>
@@ -318,16 +339,15 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="meal" data-h="17" style="--mc:#2F7A4C"><div class="h">17h</div><div class="card">
     <h3>Lanche da tarde <span class="tag">· escolhe 1</span></h3>
     <div class="opts">
-      <div class="opt"><div class="t">Opção 1 · Wrap</div><div class="l"><b>1</b> wrap: atum + ovo mexido</div><div class="l"><b>1</b> iogurte proteico</div><div class="l"><b>1</b> peça de fruta</div></div>
+      <div class="opt"><div class="t">Opção 1 · Wrap</div><div class="l"><b>1</b> wrap: atum + ovo mexido</div><div class="l"><b>1</b> iogurte proteico</div><div class="l"><b>1</b> peça de fruta</div><p class="note" style="margin-top:6px">Com muita fome: 2 wraps.</p></div>
       <div class="opt"><div class="t">Opção 2 · Caixa</div><div class="l"><b>150 g</b> arroz ou batata</div><div class="l"><b>1</b> lata de atum ou <b>2</b> ovos mexidos</div><div class="l"><b>1</b> iogurte proteico</div></div>
     </div>
-    <p class="note">Com muita fome: 2 wraps na opção 1. A opção 2 leva-se numa caixa (tupperware).</p>
   </div></div>
 
   <div class="meal" data-h="21" style="--mc:#3B6FD8"><div class="h">21h</div><div class="card">
     <h3>Jantar</h3>
     <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>450 g</b></div>
-    <div class="it"><span>Frango, peru ou peixe</span><b>150 g</b></div>
+    <div class="it"><span>Frango, peru ou peixe <small class="muted" style="display:block;font-size:13px">pelo menos 1 bife</small></span><b>à vontade</b></div>
     <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
     <div class="it"><span>Azeite</span><b>1 colher</b></div>
     <div class="it"><span>Fruta</span><b>1 peça</b></div>
@@ -335,7 +355,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 
   <div class="avoid"><b>Evitar:</b> bolachas, chocolate, batatas fritas, sumos, refrigerantes, comer do pacote, saltar refeições.</div>
 
-  <h2>Arroz, massa e batata</h2>
+  <h2>Como pesar: arroz, massa e batata</h2>
   <div class="box"><b>Se és tu a cozinhar</b>Pesa o arroz ou a massa <b style="display:inline;font-size:inherit">crus</b>, antes de os cozinhar.</div>
   <div class="card" style="padding:10px 12px">
     <table>
@@ -352,6 +372,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
     <div class="rule"><b>Legumes</b><span>Pede à mãe salada ou legumes ao almoço e ao jantar.</span></div>
     <div class="rule"><b>À noite</b><span>Prepara o lanche do dia seguinte e deixa a garrafa de água pronta.</span></div>
     <div class="rule"><b>Frango</b><span>Cru só aguenta 1 a 2 dias no frigorífico, por isso cozinha logo ou congela. Cozinhado aguenta 3 a 4 dias.</span></div>
+    <div class="rule"><b>Restaurante</b><span>Ao fim de semana não precisas de pesar nada. Enche metade do prato com arroz, massa ou batata e come a carne ou o peixe todo.</span></div>
     <div class="rule"><b>Pesar-te</b><span>Todos os sábados de manhã, em jejum, depois de ires à casa de banho.</span></div>
   </div>
 
@@ -383,11 +404,9 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <h2>Treinos do Vitor</h2>
   <div class="week" id="week"></div>
   <div id="treinoDay"></div>
-  <details class="card">
+  <details class="card" id="howTo">
     <summary>Como funciona</summary>
-    <div class="rule"><b>3 × 8–12</b><span>3 séries de 8 a 12 repetições.</span></div>
-    <div class="rule"><b>Peso</b><span>O peso que aparece é uma ideia. Escreve o peso que escolheste.</span></div>
-    <div class="rule"><b>Mesmo peso</b><span>Usa esse peso em todas as séries. Não mudes a meio.</span></div>
+    <div class="rule"><b>Mesmo peso</b><span>Usa o mesmo peso em todas as séries. Não mudes a meio.</span></div>
     <div class="rule"><b>Repetições</b><span>Faz o máximo que conseguires bem feito, até 12 (ou até 15 nos exercícios que dizem 15). É normal fazer menos de série para série.</span></div>
     <div class="rule"><b>Apontar</b><span>Escreve o peso, as repetições de cada série e, por baixo, como te sentiste.</span></div>
     <div class="rule"><b>Descanso</b><span>Toca no tempo de descanso e o cronómetro começa a contar.</span></div>
@@ -400,30 +419,30 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 <!-- COMPRAS -->
 <section class="view" id="v-compras">
   <h2>Compras da semana</h2>
-  <p class="lead">Marca cada coisa à medida que a pões no carrinho.</p>
+  <div class="wkbar"><b id="cWeek"></b><span>Todas as segundas aparece uma lista nova.</span></div>
+  <p class="lead" style="margin-top:10px">Marca cada coisa quando a pões no carrinho. Se já tens em casa, carrega em “Já tenho em casa” e não precisas de comprar.</p>
   <div class="prog" id="cProg"></div>
 
   <div class="store" style="--sc:#2F8A4A;--qb:light-dark(#E3F2E7,#1D3626)">
-    <div class="sh"><span>Pingo Doce</span><span>27,35 €</span></div>
-    <label class="row"><input type="checkbox" data-c="pd-ovos"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Ovos<span class="q">30</span></span><span class="d" style="display:block">Ovos de Solo Classe M 24 un (6,49 €, preço a confirmar) + Ovos de Solo Classe M Pingo Doce 6 un (1,79 €)</span></span><span class="p">8,28 €</span></label>
-    <label class="row"><input type="checkbox" data-c="pd-pao"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Pão de forma<span class="q">1 pacote</span></span><span class="d" style="display:block">Pão de Forma Branco com Côdea Pingo Doce 600 g</span></span><span class="p">1,09 €</span></label>
-    <label class="row"><input type="checkbox" data-c="pd-wraps"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Wraps<span class="q">1 pacote de 8</span></span><span class="d" style="display:block">Tortilhas Wrap Pingo Doce</span></span><span class="p">1,09 €</span></label>
-    <label class="row"><input type="checkbox" data-c="pd-atum"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Atum<span class="q">7 latas</span></span><span class="d" style="display:block">Atum Posta ao Natural Pingo Doce, 0,94 € cada</span></span><span class="p">6,58 €</span></label>
-    <label class="row"><input type="checkbox" data-c="pd-macas"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Maçãs<span class="q">28</span></span><span class="d" style="display:block">Maçã Gala Embalada 1,5 kg: 3 sacos + 1 solta</span></span><span class="p">7,76 €</span></label>
-    <label class="row"><input type="checkbox" data-c="pd-leite"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Leite<span class="q">3 litros</span></span><span class="d" style="display:block">Leite UHT Meio Gordo Pingo Doce, 0,85 € cada</span></span><span class="p">2,55 €</span></label>
+    <div class="sh"><span>Pingo Doce</span><span id="tot-pd"></span></div>
+    <div class="it2" data-s="pd" data-id="pd-ovos" data-p="8.28"><label class="row"><input type="checkbox" data-c="pd-ovos"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Ovos<span class="q">30</span></span><span class="d" style="display:block">Ovos de Solo Classe M 24 un (6,49 €, preço a confirmar) + Ovos de Solo Classe M Pingo Doce 6 un (1,79 €)</span></span><span class="p">8,28 €</span></label><button type="button" class="haveb" data-h="pd-ovos">Já tenho em casa</button></div>
+    <div class="it2" data-s="pd" data-id="pd-pao" data-p="1.09"><label class="row"><input type="checkbox" data-c="pd-pao"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Pão de forma<span class="q">1 pacote</span></span><span class="d" style="display:block">Pão de Forma Branco com Côdea Pingo Doce 600 g</span></span><span class="p">1,09 €</span></label><button type="button" class="haveb" data-h="pd-pao">Já tenho em casa</button></div>
+    <div class="it2" data-s="pd" data-id="pd-wraps" data-p="1.09"><label class="row"><input type="checkbox" data-c="pd-wraps"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Wraps<span class="q">1 pacote de 8</span></span><span class="d" style="display:block">Tortilhas Wrap Pingo Doce</span></span><span class="p">1,09 €</span></label><button type="button" class="haveb" data-h="pd-wraps">Já tenho em casa</button></div>
+    <div class="it2" data-s="pd" data-id="pd-atum" data-p="6.58"><label class="row"><input type="checkbox" data-c="pd-atum"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Atum<span class="q">7 latas</span></span><span class="d" style="display:block">Atum Posta ao Natural Pingo Doce, 0,94 € cada</span></span><span class="p">6,58 €</span></label><button type="button" class="haveb" data-h="pd-atum">Já tenho em casa</button></div>
+    <div class="it2" data-s="pd" data-id="pd-macas" data-p="7.76"><label class="row"><input type="checkbox" data-c="pd-macas"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Maçãs<span class="q">28</span></span><span class="d" style="display:block">Maçã Gala Embalada 1,5 kg: 3 sacos + 1 solta</span></span><span class="p">7,76 €</span></label><button type="button" class="haveb" data-h="pd-macas">Já tenho em casa</button></div>
+    <div class="it2" data-s="pd" data-id="pd-leite" data-p="2.55"><label class="row"><input type="checkbox" data-c="pd-leite"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Leite<span class="q">3 litros</span></span><span class="d" style="display:block">Leite UHT Meio Gordo Pingo Doce, 0,85 € cada</span></span><span class="p">2,55 €</span></label><button type="button" class="haveb" data-h="pd-leite">Já tenho em casa</button></div>
   </div>
 
   <div class="store" style="--sc:#C8372D;--qb:light-dark(#FCE7E5,#3A1F1C)">
-    <div class="sh"><span>Continente</span><span>13,61 €</span></div>
-    <label class="row"><input type="checkbox" data-c="ct-iog"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Iogurtes proteicos<span class="q">7</span></span><span class="d" style="display:block">+Proteína Stracciatella Continente, 1,09 € cada</span></span><span class="p">7,63 €</span></label>
-    <label class="row"><input type="checkbox" data-c="ct-saq"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Saquetas para a água<span class="q">2 caixas</span></span><span class="d" style="display:block">Prozis H2O Infusion (vê em baixo)</span></span><span class="p">5,98 €</span></label>
+    <div class="sh"><span>Continente</span><span id="tot-ct"></span></div>
+    <div class="it2" data-s="ct" data-id="ct-iog" data-p="7.63"><label class="row"><input type="checkbox" data-c="ct-iog"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Iogurtes proteicos<span class="q">7</span></span><span class="d" style="display:block">+Proteína Stracciatella Continente, 1,09 € cada</span></span><span class="p">7,63 €</span></label><button type="button" class="haveb" data-h="ct-iog">Já tenho em casa</button></div>
+    <div class="it2" data-s="ct" data-id="ct-saq" data-p="5.98"><label class="row"><input type="checkbox" data-c="ct-saq"><span class="cb"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="x"><span class="n">Saquetas para a água<span class="q">2 caixas</span></span><span class="d" style="display:block">Prozis H2O Infusion (vê em baixo)</span></span><span class="p">5,98 €</span></label><button type="button" class="haveb" data-h="ct-saq">Já tenho em casa</button></div>
   </div>
 
   <div class="card">
-    <div class="tot big"><span>Total por semana</span><span>40,96 €</span></div>
-    <div class="tot muted"><span>4 semanas</span><b>163,84 €</b></div>
+    <div class="tot big"><span>A gastar esta semana</span><span id="cTot"></span></div>
+    <div class="tot muted small"><span>Lista completa</span><span>40,96 €</span></div>
   </div>
-  <button class="btn ghost full" id="newWeek" type="button">Nova semana: limpar a lista</button>
 
   <h2>Saquetas para a água</h2>
   <div class="infusion">
@@ -555,7 +574,7 @@ const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return 
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 const PARTS = ['treinos', 'agua', 'compras', 'peso'];
 function load() {
-  const d = { treinos: {}, agua: {}, compras: {}, peso: { '2026-11-09': 69, '2026-11-14': 68.05, '2026-11-21': 68.8 } };
+  const d = { treinos: {}, agua: {}, compras: {}, peso: { '2026-11-14': 68.05, '2026-11-21': 68.8 } };
   try { const o = JSON.parse(lsGet(LS) || 'null'); if (o) for (const p of PARTS) if (isObj(o[p])) d[p] = o[p]; } catch (e) {}
   return d;
 }
@@ -693,6 +712,7 @@ function renderWeek() {
 function renderTreino() {
   renderWeek();
   const box = $('#treinoDay'), d = DAYS[selDay];
+  $('#howTo').hidden = !d;
   if (!d) {
     const w = WEEK.find(x => x.k === selDay), nxt = nextTraining();
     box.innerHTML = `<div class="dayhead" style="--dc:#55605A"><h3>Dia de descanso</h3><p>${esc(w.rest)}</p></div>
@@ -712,18 +732,19 @@ function renderTreino() {
         <div class="inp"><input inputmode="decimal" autocomplete="off" aria-label="${esc(e[0])}, série ${j + 1}, peso em kg" data-i="${i}" data-j="${j}" data-f="0" value="${esc(v[0])}" placeholder="—"><span>kg</span></div>
         <div class="inp"><input inputmode="numeric" autocomplete="off" aria-label="${esc(e[0])}, série ${j + 1}, repetições" data-i="${i}" data-j="${j}" data-f="1" value="${esc(v[1])}" placeholder="${r.lo}–${r.hi}"><span>reps</span></div></div>`;
     }
-    let lastTxt = 'Primeira vez com este exercício na app.';
+    let lastTxt = '';
     if (last) { lastTxt = 'Última vez (' + ddmm(last.d) + '): ' + esc(fmtSets(last.x)); if (String(last.x.nota || '').trim()) lastTxt += ' · Nota: ' + esc(String(last.x.nota).trim()); }
     h += `<div class="card ex" style="--dc:${d.c}"><div class="hd"><span class="num">${i + 1}</span><div>
       <div class="name">${esc(e[0])}</div><div class="br">${esc(e[1])}</div>
       <a class="vid" href="${yt(e[2])}" target="_blank" rel="noopener">▶ Ver vídeo de como se faz</a></div></div>
-      <div class="pills"><span class="pill">${r.n} × ${r.lo}–${r.hi}</span><button type="button" class="pill" data-rest="${e[5]}" aria-label="Começar descanso de ${esc(e[4])}"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>${esc(e[4])}</button></div>
-      <div class="kgbox"><span class="l">Peso<br>em todas as séries</span><b>${kgs(e[7])} kg</b></div>
+      <div class="plan"><div class="pl"><b>${r.n} × ${r.lo}–${r.hi}</b><span>${r.n} séries de ${r.lo} a ${r.hi} repetições</span></div>
+        <div class="pk"><span>Peso</span><b>${kgs(e[7])} kg</b><span>em todas as séries</span></div></div>
+      <button type="button" class="restb" data-rest="${e[5]}" aria-label="Começar descanso de ${esc(e[4])}"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Descanso: ${esc(e[4])}</button>
       <div class="tip" style="margin-top:8px">${esc(e[6])}</div>
       <div class="sets">${rows}</div>
       <label class="nl" for="nota-${i}">Como correu?</label>
       <textarea class="nota" id="nota-${i}" data-nota="${i}" rows="2" placeholder="Ex.: o peso estava pesado e só aguentei 8. Ou: dava para mais.">${esc(x.nota || '')}</textarea>
-      <div class="last">${lastTxt}</div></div>`;
+      ${lastTxt ? `<div class="last">${lastTxt}</div>` : ''}</div>`;
   });
   h += `<div class="card send"><h3>Acabaste o treino?</h3><p class="small">Envia-o à Rafaela, com os pesos, as repetições e as notas.</p>
     <div class="row2"><a class="btn" id="waDay" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn ghost" type="button" data-copy="day">Copiar</button></div>
@@ -851,7 +872,7 @@ const chart = $('#chart');
 function drawChart() {
   const W = chart.clientWidth, H = chart.clientHeight; if (!W || !H) return;
   const ps = pesos(), t = s => parseIso(s).getTime();
-  const x0 = Math.min(t('2026-11-08'), ...ps.map(p => t(p.d))), x1 = Math.max(t('2026-12-13'), ...ps.map(p => t(p.d)));
+  const x0 = Math.min(t('2026-11-13'), ...ps.map(p => t(p.d))), x1 = Math.max(t('2026-12-13'), ...ps.map(p => t(p.d)));
   const y0 = Math.min(67.5, ...ps.map(p => p.kg - .3)), y1 = Math.max(71.5, ...ps.map(p => p.kg + .3));
   const L = 34, R = 10, T = 12, B = 26;
   const X = v => L + (v - x0) / (x1 - x0) * (W - L - R), Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
@@ -875,9 +896,9 @@ const ro = new ResizeObserver(drawChart); ro.observe(chart);
 const MEALS = [
   { h: 6, n: 'Pequeno-almoço', it: '3 ovos mexidos ou omelete · 2 fatias de pão · batido (300 ml de leite + 1 dose de whey)' },
   { h: 10, n: 'Lanche da manhã', it: '1 peça de fruta' },
-  { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · 150 g de frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' },
-  { h: 17, n: 'Lanche da tarde', it: 'Wrap de atum + ovo mexido, iogurte proteico e fruta. Ou a caixa: 150 g de arroz ou batata, atum ou 2 ovos, iogurte proteico' },
-  { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · 150 g de frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' }
+  { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · frango, peru ou peixe à vontade (pelo menos 1 bife) · salada · 1 colher de azeite · 1 fruta' },
+  { h: 17, n: 'Lanche da tarde', it: 'Wrap de atum + ovo mexido, iogurte proteico e fruta. Com muita fome: 2 wraps' },
+  { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · frango, peru ou peixe à vontade (pelo menos 1 bife) · salada · 1 colher de azeite · 1 fruta' }
 ];
 const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -959,19 +980,28 @@ $('#bottles').addEventListener('click', ev => {
 });
 
 /* ---------- compras ---------- */
-const CB = [...document.querySelectorAll('[data-c]')];
+function weekStart() { const d = parseIso(TODAY); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return iso(d); }
+const WK = weekStart();
+const ITEMS = [...document.querySelectorAll('.it2')];
+const euro = v => v.toFixed(2).replace('.', ',') + ' €';
+function cState(id) { return S.compras[WK + '|' + id] || null; }
 function renderCompras() {
-  let n = 0;
-  CB.forEach(c => { c.checked = !!S.compras[c.dataset.c]; if (c.checked) n++; });
-  $('#cProg').textContent = n === CB.length ? 'Tudo no carrinho!' : n + ' de ' + CB.length + ' no carrinho';
+  const e = parseIso(WK); e.setDate(e.getDate() + 6);
+  $('#cWeek').textContent = 'Semana de ' + ddmm(WK) + ' a ' + ddmm(iso(e));
+  let done = 0, need = 0; const tot = { pd: 0, ct: 0 };
+  ITEMS.forEach(it => {
+    const id = it.dataset.id, st = cState(id), cb = it.querySelector('input'), hb = it.querySelector('.haveb');
+    it.classList.toggle('have', st === 'h'); cb.checked = st === 'c'; cb.disabled = st === 'h';
+    hb.textContent = st === 'h' ? 'Afinal preciso de comprar' : 'Já tenho em casa';
+    if (st !== 'h') { need++; tot[it.dataset.s] += +it.dataset.p; if (st === 'c') done++; }
+  });
+  $('#tot-pd').textContent = euro(tot.pd); $('#tot-ct').textContent = euro(tot.ct); $('#cTot').textContent = euro(tot.pd + tot.ct);
+  $('#cProg').textContent = need === 0 ? 'Tens tudo em casa esta semana!' : done === need ? 'Tudo no carrinho!' : done + ' de ' + need + ' no carrinho';
 }
-CB.forEach(c => c.addEventListener('change', () => { put('compras', c.dataset.c, c.checked || null); renderCompras(); }));
-let nwT = 0;
-$('#newWeek').addEventListener('click', ev => {
-  const b = ev.currentTarget;
-  if (!b.classList.contains('danger')) { b.classList.add('danger'); b.textContent = 'Toca outra vez para limpar'; clearTimeout(nwT); nwT = setTimeout(() => { b.classList.remove('danger'); b.textContent = 'Nova semana: limpar a lista'; }, 3500); return; }
-  clearTimeout(nwT); S.compras = {}; saveLocal(); enqueue({ fn: 'limpar' }); renderCompras();
-  b.classList.remove('danger'); b.textContent = 'Lista limpa ✓'; setTimeout(() => { b.textContent = 'Nova semana: limpar a lista'; }, 2000);
+ITEMS.forEach(it => {
+  const id = it.dataset.id, k = WK + '|' + id;
+  it.querySelector('input').addEventListener('change', ev => { put('compras', k, ev.target.checked ? 'c' : null); renderCompras(); });
+  it.querySelector('.haveb').addEventListener('click', () => { put('compras', k, cState(id) === 'h' ? null : 'h'); renderCompras(); });
 });
 
 /* ---------- enviar à Rafaela ---------- */
@@ -1009,7 +1039,7 @@ $('#gateForm').addEventListener('submit', async ev => {
   ev.preventDefault();
   const code = $('#gateIn').value.replace(/\D/g, '');
   const btn = ev.target.querySelector('button'), er = $('#gateErr');
-  if (code.length < 4) { er.textContent = 'Escreve o código de 6 números.'; return; }
+  if (code.length < 3) { er.textContent = 'Escreve o código.'; return; }
   btn.disabled = true; btn.textContent = 'A entrar…'; er.textContent = '';
   try {
     const d = await rpc('app_ler', { p_pin: code });
