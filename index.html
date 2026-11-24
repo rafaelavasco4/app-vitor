@@ -918,7 +918,7 @@ function renderAvisos() {
   } else if (Notification.permission === 'denied') {
     h = '<b>Avisos desligados</b><p class="small" style="margin:4px 0 0">Para receberes os avisos, liga as notificações da app nas Definições do telemóvel.</p>';
   } else {
-    h = '<b>Aviso todas as manhãs</b><p class="small" style="margin:4px 0 0">Todos os dias às 5h recebes um aviso com o plano do dia. Ao sábado, lembra-te de te pesares.</p><button type="button" class="btn full" id="ativarAvisos">Ativar avisos</button><p class="err" id="avisoErr"></p>';
+    h = '<b>Avisos no telemóvel</b><p class="small" style="margin:4px 0 0">Às 5h recebes o plano do dia e, a cada refeição, um aviso a dizer o que comer.</p><button type="button" class="btn full" id="ativarAvisos">Ativar avisos</button><p class="err" id="avisoErr"></p>';
   }
   box.innerHTML = h ? '<div class="card notif">' + h + '</div>' : '';
 }
