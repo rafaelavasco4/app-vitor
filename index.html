@@ -285,6 +285,8 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 .party .em{font-size:34px;line-height:1;display:inline-block}
 .party.pop .em{animation:pop .9s ease-out}
 @keyframes pop{0%{transform:scale(.2) rotate(-30deg)}55%{transform:scale(1.6) rotate(12deg)}100%{transform:scale(1) rotate(0)}}
+.undo[hidden]{display:none}
+.undo{display:block;margin:10px auto 0;border:0;background:none;color:var(--mute);font-size:14px;text-decoration:underline;cursor:pointer;min-height:36px}
 @media (max-width:370px){.set{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr)}.rule{grid-template-columns:80px minmax(0,1fr)}.form{grid-template-columns:1fr 1fr}.form .btn{grid-column:1/-1}.plan .r{grid-template-columns:92px minmax(0,1fr) auto}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -312,6 +314,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
     <h3>Água de hoje</h3>
     <p class="muted small" id="aguaTxt">Toca numa garrafa quando a acabares.</p>
     <div class="bottles" id="bottles"></div>
+    <button type="button" class="undo" id="aguaUndo" hidden>Enganei-me, desfazer</button>
   </div>
   <div class="card next" id="hojeMeal"></div>
   <div id="avisos"></div>
@@ -956,8 +959,10 @@ function renderHoje() {
   const at = $('#aguaTxt');
   if (b >= 2) { at.className = 'party' + (justDone ? ' pop' : ''); at.innerHTML = '<span class="em">🎉</span><span>Parabéns! Bebeste os 3 litros de água hoje.</span>'; }
   else { at.className = 'muted small'; at.textContent = b === 1 ? '1,5 L de 3 L. Falta 1 garrafa.' : 'Toca numa garrafa quando a acabares.'; }
+  $('#aguaUndo').hidden = b === 0;
   justDone = false;
-  $('#bottles').innerHTML = [1, 2].map(n => `<button type="button" class="bottle ${b >= n ? 'full' : ''}" data-b="${n}" aria-pressed="${b >= n}">
+  $('#bottles').style.gridTemplateColumns = b === 1 ? '1fr' : '';
+  $('#bottles').innerHTML = [1, 2].filter(n => n > b).map(n => `<button type="button" class="bottle ${b >= n ? 'full' : ''}" data-b="${n}" aria-pressed="${b >= n}">
     <svg viewBox="0 0 28 56"><path d="M10 2h8v6l3 4v40a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V12l3-4z" fill="none" stroke="currentColor" stroke-width="2"/><path class="w" d="M11 4h6v5l3 4v38.5a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V13l3-4z"/></svg>
     <span><b>Garrafa ${n}</b><span class="muted small">1,5 L + 1 saqueta</span></span></button>`).join('');
   const hr = now.getHours() + now.getMinutes() / 60;
@@ -974,6 +979,7 @@ $('#bottles').addEventListener('click', ev => {
   const nv = b >= n ? n - 1 : n; justDone = nv >= 2 && b < 2;
   put('agua', TODAY, nv); renderHoje();
 });
+$('#aguaUndo').addEventListener('click', () => { const b = Number(S.agua[TODAY]) || 0; if (b > 0) { put('agua', TODAY, b - 1); renderHoje(); } });
 
 /* ---------- compras ---------- */
 var justDone = false;
