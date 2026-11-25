@@ -424,8 +424,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 
 <!-- COMPRAS -->
 <section class="view" id="v-compras">
-  <h2>Compras da semana</h2>
-  <div class="wkbar"><b id="cWeek"></b><span>Todos os sábados aparece uma lista nova.</span></div>
+  <h2>Compras da semana <span id="cWeek" style="white-space:nowrap">– </span></h2>
   <p class="lead" style="margin-top:10px">Antes de ires às compras, diz quantas coisas já tens em casa (no + e −). A lista e o preço mudam sozinhos. Depois marca cada coisa quando a pões no carrinho.</p>
   <div class="prog" id="cProg"></div>
 
@@ -475,7 +474,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="card list" id="pList"></div>
   <h2>Enviar à Rafaela</h2>
   <div class="card">
-    <p class="muted small">Resumo da semana numa imagem: pesagens, água e todos os treinos, com pesos, repetições e notas.</p>
+    <p class="muted small">Resumo da semana: pesagens, água e todos os treinos, com pesos, repetições e notas.</p>
     <button class="btn full" type="button" data-send="week">Enviar à Rafaela por WhatsApp</button>
   </div>
   <p class="note2">Tudo o que apontas fica guardado online. A Rafaela vê o mesmo na app dela.</p>
@@ -1003,7 +1002,7 @@ const bought = id => S.compras[kB(id)] === 'c';
 const atHome = id => Math.max(0, Math.min(NEED[id].n, +S.compras[kH(id)] || 0));
 function renderCompras() {
   const e = parseIso(WK); e.setDate(e.getDate() + 6);
-  $('#cWeek').textContent = 'Semana de ' + ddmm(WK) + ' a ' + ddmm(iso(e));
+  $('#cWeek').textContent = '– ' + ddmm(WK) + ' a ' + ddmm(iso(e));
   let done = 0, need = 0; const tot = { pd: 0, ct: 0 };
   ITEMS.forEach(it => {
     const id = it.dataset.id, cfg = NEED[id], h = atHome(id), k = cfg.n - h, cb = it.querySelector('input');
@@ -1031,7 +1030,7 @@ ITEMS.forEach(it => {
 const PHONE = '351967365006';
 const weekDays = () => [...Array(7)].map((_, k) => { const d = parseIso(MON); d.setDate(d.getDate() + k); return iso(d); });
 const weekKeys = () => { const days = weekDays(); return Object.keys(S.treinos).filter(k => SESS_RE.test(k) && days.includes(k.slice(0, 10))).sort(); };
-const setsTxt = x => sets(x).filter(a => a[0] || a[1]).map(a => (a[0] || '?') + ' kg × ' + (a[1] || '?'));
+const setsTxt = x => sets(x).map((a, j) => [a, j]).filter(([a]) => a[0] || a[1]).map(([a, j]) => (j + 1) + 'ª série: ' + (a[0] || '?') + ' kg × ' + (a[1] || '?') + ' reps');
 /* texto (só se o telemóvel não conseguir partilhar a imagem) */
 function dayTextWA(k) {
   const s = sessionOf(k), dk = k.slice(11), d = DAYS[dk];
@@ -1143,7 +1142,7 @@ function openWA(kind) {
   window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(txt), '_blank');
 }
 function updateSend() {}
-document.addEventListener('click', ev => { const b = ev.target.closest('[data-send]'); if (b) sendReport(b.dataset.send); });
+document.addEventListener('click', ev => { const b = ev.target.closest('[data-send]'); if (b) openWA(b.dataset.send); });
 
 /* ---------- arranque ---------- */
 function showGate(msg) {
