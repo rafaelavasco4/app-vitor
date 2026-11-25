@@ -745,8 +745,6 @@ function renderTreino() {
       <textarea class="nota" id="nota-${i}" data-nota="${i}" rows="2" placeholder="Ex.: o peso estava pesado e só aguentei 8. Ou: dava para mais.">${esc(x.nota || '')}</textarea>
       </div>`;
   });
-  h += `<div class="card send"><h3>Acabaste o treino?</h3><p class="small">Envia-o à Rafaela, com os pesos, as repetições e as notas.</p>
-    <button class="btn full" type="button" data-send="day">Enviar à Rafaela por WhatsApp</button></div>`;
   box.innerHTML = h;
   renderHist();
 }
