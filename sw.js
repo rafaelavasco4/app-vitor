@@ -1,5 +1,5 @@
 // App do Vitor: funciona sem internet e mostra o aviso de sábado.
-const CACHE = 'vitor-v1';
+const CACHE = 'vitor-v2';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -20,7 +20,7 @@ self.addEventListener('fetch', e => {
 self.addEventListener('push', e => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (_) { d = { body: e.data ? e.data.text() : '' }; }
-  e.waitUntil(self.registration.showNotification(d.title || 'App do Vitor', {
+  e.waitUntil(self.registration.showNotification(d.title || 'Projeto Vitor', {
     body: d.body || '', icon: 'icon-192.png', badge: 'icon-192.png', data: { url: d.url || './#peso' }
   }));
 });

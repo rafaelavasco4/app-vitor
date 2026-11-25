@@ -7,11 +7,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Vitor">
+<meta name="apple-mobile-web-app-title" content="Projeto Vitor">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" href="icon-192.png">
-<title>App do Vitor</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<link rel="icon" href="icon-192.png?v=2">
+<title>Projeto Vitor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -294,7 +294,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 <main>
 <div class="gate" id="gate" hidden><div class="in">
   <img src="icon-192.png" alt="">
-  <h1>App do Vitor</h1>
+  <h1>Projeto Vitor</h1>
   <p>Escreve o código da app. Só é preciso uma vez.</p>
   <form id="gateForm"><input id="gateIn" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="···" aria-label="Código da app"><button class="btn" type="submit">Entrar</button></form>
   <p class="err" id="gateErr"></p>
@@ -342,7 +342,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="meal" data-h="17" style="--mc:#2F7A4C"><div class="h">17h</div><div class="card">
     <h3>Lanche da tarde <span class="tag">· escolhe 1</span></h3>
     <div class="opts">
-      <div class="opt"><div class="t">Opção 1 · Wrap</div><div class="l"><b>1</b> wrap: atum + ovo mexido</div><div class="l"><b>1</b> iogurte proteico</div><div class="l"><b>1</b> peça de fruta</div><p class="note" style="margin-top:6px">Com muita fome: 2 wraps.</p></div>
+      <div class="opt"><div class="t">Opção 1 · Wraps</div><div class="l"><b>2</b> wraps: atum + ovo mexido</div><div class="l"><b>1</b> iogurte proteico</div><div class="l"><b>1</b> peça de fruta</div></div>
       <div class="opt"><div class="t">Opção 2 · Caixa</div><div class="l"><b>150 g</b> arroz ou batata</div><div class="l"><b>1</b> lata de atum ou <b>2</b> ovos mexidos</div><div class="l"><b>1</b> iogurte proteico</div></div>
     </div>
   </div></div>
@@ -375,7 +375,6 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
     <div class="rule"><b>Legumes</b><span>Pede à mãe salada ou legumes ao almoço e ao jantar.</span></div>
     <div class="rule"><b>À noite</b><span>Prepara o lanche do dia seguinte e deixa a garrafa de água pronta.</span></div>
     <div class="rule"><b>Frango</b><span>Cru só aguenta 1 a 2 dias no frigorífico, por isso cozinha logo ou congela. Cozinhado aguenta 3 a 4 dias.</span></div>
-    <div class="rule"><b>Restaurante</b><span>Ao fim de semana não precisas de pesar nada. Enche metade do prato com arroz, massa ou batata e come a carne ou o peixe todo.</span></div>
     <div class="rule"><b>Pesar-te</b><span>Todos os sábados de manhã, em jejum, depois de ires à casa de banho.</span></div>
   </div>
 
@@ -422,7 +421,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 <!-- COMPRAS -->
 <section class="view" id="v-compras">
   <h2>Compras da semana</h2>
-  <div class="wkbar"><b id="cWeek"></b><span>Todas as segundas aparece uma lista nova.</span></div>
+  <div class="wkbar"><b id="cWeek"></b><span>Todos os sábados aparece uma lista nova.</span></div>
   <p class="lead" style="margin-top:10px">Antes de ires às compras, diz quantas coisas já tens em casa (no + e −). A lista e o preço mudam sozinhos. Depois marca cada coisa quando a pões no carrinho.</p>
   <div class="prog" id="cProg"></div>
 
@@ -444,7 +443,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 
   <div class="card">
     <div class="tot big"><span>A gastar esta semana</span><span id="cTot"></span></div>
-    <div class="tot muted small"><span>Lista completa</span><span>40,96 €</span></div>
+    <div class="tot muted small"><span>Lista completa</span><span id="cFull"></span></div>
   </div>
 
   <h2>Saquetas para a água</h2>
@@ -483,13 +482,10 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="card" id="pNew"></div>
   <div class="card"><h3>Evolução</h3><div class="fig"><svg id="chart" role="img" aria-label="Gráfico do peso"></svg></div></div>
   <div class="card list" id="pList"></div>
-  <h2>Pesagens do teste</h2>
-  <div class="card plan" id="pPlan"></div>
   <h2>Enviar à Rafaela</h2>
   <div class="card">
-    <p class="muted small">Resumo da semana: pesagens, água e todos os treinos, com pesos, repetições e notas.</p>
-    <div class="row2"><a class="btn" id="waWeek" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn ghost" type="button" data-copy="week">Copiar</button></div>
-    <textarea class="copyBox" readonly hidden></textarea>
+    <p class="muted small">Resumo da semana numa imagem: pesagens, água e todos os treinos, com pesos, repetições e notas.</p>
+    <button class="btn full" type="button" data-send="week">Enviar à Rafaela por WhatsApp</button>
   </div>
   <p class="note2">Tudo o que apontas fica guardado online. A Rafaela vê o mesmo na app dela.</p>
 </section>
@@ -517,6 +513,7 @@ const iso = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.get
 const parseIso = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
 const ddmm = s => s.slice(8, 10) + '/' + s.slice(5, 7);
 const kgs = x => (Math.round(x * 100) / 100).toString().replace('.', ',');
+const kg2 = x => (Math.round(x * 100) / 100).toFixed(2).replace('.', ',');
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const WD = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
 const MES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
@@ -526,15 +523,19 @@ const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
 const clone = v => JSON.parse(JSON.stringify(v));
 
 /* ---------- plano de treino (pesos de referência do PT, atualizados todas as semanas; ele escolhe o peso que usa) ----------
-   [nome, nome no Brasil, vídeo do YouTube, séries, descanso, segundos, dica, peso de referência (kg)] */
+   [nome, nome no Brasil, vídeo do YouTube, séries, descanso, segundos, dica, peso de referência (kg), 1 = peso de cada halter]
+   Os pesos em DAYS valem a partir de 30/11; semanas anteriores têm os pesos que o PT deu nessa semana (REF_WK). */
 const yt = id => 'https://www.youtube.com/watch?v=' + id;
+const REF_WK = {
+  '2026-11-23': { seg: [35, 10, 30, 25, 7.5, 30, 15], ter: [45, 25, 35, 15, 30, 7.5] }
+};
 const DAYS = {
   seg: { n: 'Segunda', t: 'Peito, tríceps e ombros', c: '#E8743B', aq: 'Aquecer 6 a 8 minutos na passadeira ou na elíptica.', ex: [
     ['Chest press em máquina', 'supino máquina', 'rfbmQ1os7E8', '3 × 8–12', '1 min e meio a 2 min', 120, 'Costas apoiadas; descer devagar', 35],
-    ['Press inclinado com halteres', 'supino inclinado com halteres', 'Ky_JXqloq0w', '3 × 8–12', '1 min e meio', 90, 'Banco pouco inclinado; pés firmes', 12.5],
+    ['Press inclinado com halteres', 'supino inclinado com halteres', 'Ky_JXqloq0w', '3 × 8–12', '1 min e meio', 90, 'Banco pouco inclinado; pés firmes', 12.5, 1],
     ['Pec deck', 'voador', 'zEcIgGm7fxU', '2 × 10–15', '1 min e 15 s', 75, 'Sem perder o controlo', 30],
     ['Press de ombros em máquina', 'desenvolvimento máquina', 'Q7K6DI9R-A8', '3 × 8–12', '1 min e meio', 90, 'Costas apoiadas; não encolher os ombros', 20],
-    ['Elevação lateral', 'elevação lateral', 'gURBTU9VSJg', '3 × 12–15', '1 min', 60, 'Sem balançar o corpo', 6],
+    ['Elevação lateral', 'elevação lateral', 'gURBTU9VSJg', '3 × 12–15', '1 min', 60, 'Sem balançar o corpo', 6, 1],
     ['Tríceps com corda', 'tríceps corda', '7le1JRUUagM', '3 × 10–15', '1 min', 60, 'Cotovelos junto ao corpo', 27],
     ['Extensão de tríceps acima da cabeça no cabo', 'tríceps francês na polia', 'lkEoFfNyzkk', '2 × 10–15', '1 min', 60, 'Cotovelos parados', 9]]},
   ter: { n: 'Terça', t: 'Costas, bíceps e ombros', c: '#3B7DD8', aq: 'Aquecer 6 a 8 minutos no remo ou na elíptica.', ex: [
@@ -543,7 +544,7 @@ const DAYS = {
     ['Remada baixa sentada', 'remada baixa', '2YebbYuuBJQ', '3 × 10–12', '1 min e meio', 90, 'Tronco parado; voltar devagar', 35],
     ['Pec deck invertida', 'crucifixo inverso na máquina', 'fxg1QRcuPzc', '3 × 12–15', '1 min', 60, 'Sem impulso', 15],
     ['Curl de bíceps no cabo', 'rosca direta na polia', 'zqklqTcOsbo', '3 × 10–15', '1 min', 60, 'Cotovelos parados', 30],
-    ['Curl inclinado com halteres', 'rosca inclinada com halteres', 'KH_bjsWEVI8', '2 × 10–15', '1 min', 60, 'Ombros parados', 7.5]]},
+    ['Curl inclinado com halteres', 'rosca inclinada com halteres', 'KH_bjsWEVI8', '2 × 10–15', '1 min', 60, 'Ombros parados', 7.5, 1]]},
   qui: { n: 'Quinta', t: 'Pernas', c: '#3E9A55', aq: 'Aquecer 6 a 8 minutos na bicicleta.', ex: [
     ['Cadeira extensora', 'cadeira extensora', 'WKqCZh9hdCc', '3 × 12–15', '1 min e 15 s', 75, 'Parar 1 segundo lá em cima', 45],
     ['Flexão de pernas sentada', 'cadeira flexora', '41c1QR9GizQ', '3 × 10–15', '1 min e 15 s', 75, 'Voltar devagar', 25],
@@ -666,7 +667,11 @@ function renderHeader() {
 
 /* ---------- treino ---------- */
 let selDay = WEEK[now.getDay()].k;
-const sessKey = dk => TODAY + '_' + dk;
+const MON = (() => { const d = parseIso(TODAY); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return iso(d); })();
+const OFF = { seg: 0, ter: 1, qua: 2, qui: 3, sex: 4, sab: 5, dom: 6 };
+const dateOf = dk => { const d = parseIso(MON); d.setDate(d.getDate() + (OFF[dk] ?? 0)); return iso(d); };
+const sessKey = dk => dateOf(dk) + '_' + dk;
+function refKg(dk, i, date) { const w = parseIso(date); w.setDate(w.getDate() - (w.getDay() + 6) % 7); const o = REF_WK[iso(w)]; return o && o[dk] && o[dk][i] != null ? o[dk][i] : DAYS[dk].ex[i][7]; }
 const SESS_RE = /^\d{4}-\d\d-\d\d_(seg|ter|qui|sex)$/;
 // cada série: [peso em kg, repetições] (a versão anterior guardava um só peso: x.kg + x.r)
 const sets = x => {
@@ -707,7 +712,8 @@ function daySummary(k) {
   return L.length > 1 ? L.join('\n') : '';
 }
 function renderWeek() {
-  $('#week').innerHTML = ORDER.map(i => {
+  const from = ORDER.indexOf(now.getDay());
+  $('#week').innerHTML = ORDER.filter((_, p) => p >= from).map(i => {
     const w = WEEK[i], d = DAYS[w.k];
     return `<button type="button" data-d="${w.k}" class="${w.k === selDay ? 'sel' : ''}" style="${d ? '--dc:' + d.c : ''}" aria-pressed="${w.k === selDay}">${w.s}<i></i><small>${i === now.getDay() ? 'hoje' : '&nbsp;'}</small></button>`;
   }).join('');
@@ -725,9 +731,9 @@ function renderTreino() {
   const s = sessionOf(sessKey(selDay)) || { x: {} };
   const isToday = selDay === WEEK[now.getDay()].k;
   let h = `<div class="dayhead" style="--dc:${d.c}"><h3>${esc(d.n)} · ${esc(d.t)}</h3><p>${esc(d.aq)}</p>
-    <p class="small" style="opacity:.85">${isToday ? 'Fica apontado no treino de hoje.' : 'Fica apontado hoje (' + ddmm(TODAY) + '), como treino de ' + esc(d.n.toLowerCase()) + '.'}</p></div>`;
+    <p class="small" style="opacity:.85">${isToday ? 'Treino de hoje.' : 'Treino de ' + esc(d.n.toLowerCase()) + ', ' + ddmm(dateOf(selDay)) + '.'}</p></div>`;
   d.ex.forEach((e, i) => {
-    const r = rx(e[3]), x = isObj(s.x[i]) ? s.x[i] : {}, ss = sets(x), last = lastFor(selDay, i);
+    const r = rx(e[3]), x = isObj(s.x[i]) ? s.x[i] : {}, ss = sets(x);
     let rows = '';
     for (let j = 0; j < r.n; j++) {
       const v = ss[j] || ['', ''];
@@ -735,13 +741,11 @@ function renderTreino() {
         <div class="inp"><input inputmode="decimal" autocomplete="off" aria-label="${esc(e[0])}, série ${j + 1}, peso em kg" data-i="${i}" data-j="${j}" data-f="0" value="${esc(v[0])}" placeholder="—"><span>kg</span></div>
         <div class="inp"><input inputmode="numeric" autocomplete="off" aria-label="${esc(e[0])}, série ${j + 1}, repetições" data-i="${i}" data-j="${j}" data-f="1" value="${esc(v[1])}" placeholder="${r.lo}–${r.hi}"><span>reps</span></div></div>`;
     }
-    let lastTxt = '';
-    if (last) { lastTxt = 'Última vez (' + ddmm(last.d) + '): ' + esc(fmtSets(last.x)); }
     h += `<div class="card ex" style="--dc:${d.c}"><div class="hd"><span class="num">${i + 1}</span><div>
       <div class="name">${esc(e[0])}</div><div class="br">${esc(e[1])}</div>
       <a class="vid" href="${yt(e[2])}" target="_blank" rel="noopener">▶ Ver vídeo de como se faz</a></div></div>
       <div class="plan"><div class="pl"><b>${r.n} × ${r.lo}–${r.hi}</b><span>${r.n} séries de ${r.lo} a ${r.hi} repetições</span></div>
-        <div class="pk"><span>Peso</span><b>${kgs(e[7])} kg</b><span>em todas as séries</span></div></div>
+        <div class="pk"><span>Peso</span><b>${kgs(refKg(selDay, i, dateOf(selDay)))} kg</b><span>${e[8] ? 'cada halter' : 'em todas as séries'}</span></div></div>
       <button type="button" class="restb" data-rest="${e[5]}" aria-label="Começar descanso de ${esc(e[4])}"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Descanso: ${esc(e[4])}</button>
       <div class="tip" style="margin-top:8px">${esc(e[6])}</div>
       <div class="sets">${rows}</div>
@@ -750,10 +754,9 @@ function renderTreino() {
       </div>`;
   });
   h += `<div class="card send"><h3>Acabaste o treino?</h3><p class="small">Envia-o à Rafaela, com os pesos, as repetições e as notas.</p>
-    <div class="row2"><a class="btn" id="waDay" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a><button class="btn ghost" type="button" data-copy="day">Copiar</button></div>
-    <textarea class="copyBox" readonly hidden></textarea></div>`;
+    <button class="btn full" type="button" data-send="day">Enviar à Rafaela por WhatsApp</button></div>`;
   box.innerHTML = h;
-  renderHist(); updateSend();
+  renderHist();
 }
 function renderHist() {
   const keys = Object.keys(S.treinos).filter(k => SESS_RE.test(k) && daySummary(k)).sort().reverse().slice(0, 20);
@@ -824,9 +827,9 @@ const fotos = 'Tira também as 4 fotos: frente, costas, lado direito e lado esqu
 function renderNew() {
   const box = $('#pNew'), got = loggedOn(TODAY);
   if (isWeighDay(TODAY) && got) {
-    box.innerHTML = `<h3>Pesagem de hoje feita</h3><div class="bigkg">${kgs(got.kg)} kg</div><p class="muted small" style="margin:0">Fica registado. Próxima: sábado, ${ddmm(nextWeigh())}.</p>`;
+    box.innerHTML = `<h3>Pesagem de hoje feita</h3><div class="bigkg">${kg2(got.kg)} kg</div><p class="muted small" style="margin:0">Fica registado. Próxima: sábado, ${ddmm(nextWeigh())}.</p>`;
   } else if (isWeighDay(TODAY) && pend !== null) {
-    box.innerHTML = `<h3>Confirmas?</h3><div class="bigkg">${kgs(pend)} kg</div><p class="small">Depois de guardar, já não dá para mudar nem apagar.</p>
+    box.innerHTML = `<h3>Confirmas?</h3><div class="bigkg">${kg2(pend)} kg</div><p class="small">Depois de guardar, já não dá para mudar nem apagar.</p>
       <div class="row2"><button class="btn" type="button" id="pYes">Sim, guardar</button><button class="btn ghost" type="button" id="pNo">Corrigir</button></div>`;
   } else if (isWeighDay(TODAY)) {
     box.innerHTML = `<h3>Pesagem de hoje</h3><p class="muted small" style="margin:2px 0 0">${cap(WD[6])}, ${ddmm(TODAY)} · de manhã, em jejum, depois de ires à casa de banho.${TODAY === TEST_END ? ' ' + fotos : ''}</p>
@@ -839,18 +842,14 @@ function renderNew() {
 }
 function renderPeso() {
   const ps = pesos(), last = ps[ps.length - 1], base = ps.find(p => p.d === '2026-11-14') || ps[0];
-  $('#pNow').innerHTML = last ? kgs(last.kg) + '<small> kg</small>' : '—';
+  $('#pNow').innerHTML = last ? kg2(last.kg) + '<small> kg</small>' : '—';
   const df = last && base ? last.kg - base.kg : 0, de = $('#pDelta');
-  de.textContent = (df >= 0 ? '+' : '−') + kgs(Math.abs(df)) + ' kg desde 14/11';
+  de.textContent = (df >= 0 ? '+' : '−') + kg2(Math.abs(df)) + ' kg desde 14/11';
   de.classList.toggle('neg', df < 0);
   $('#pBar').style.width = (last ? Math.max(0, Math.min(100, (last.kg - 68.05) / (71 - 68.05) * 100)) : 0) + '%';
   $('#pList').innerHTML = '<h3 style="margin-bottom:4px">Todas as pesagens</h3>' + ps.slice().reverse().map((p, k, a) => {
     const prev = a[k + 1], dd = prev ? p.kg - prev.kg : null;
-    return `<div class="r" style="grid-template-columns:minmax(0,1fr) auto"><span>${WD[parseIso(p.d).getDay()].slice(0, 3)} ${ddmm(p.d)}</span><span><span class="kg">${kgs(p.kg)} kg</span> ${dd === null ? '' : `<span class="df ${dd < 0 ? 'neg' : ''}">${dd >= 0 ? '+' : '−'}${kgs(Math.abs(dd))}</span>`}</span></div>`;
-  }).join('');
-  $('#pPlan').innerHTML = PLAN.map(x => {
-    const got = ps.find(p => p.d === x.d);
-    return `<div class="r"><b>${x.l}</b><span class="muted small">${x.e}</span>${got ? `<span class="ok">${kgs(got.kg)} kg ✓</span>` : (x.d < TODAY ? '<span class="muted small">falta</span>' : '<span></span>')}</div>`;
+    return `<div class="r" style="grid-template-columns:minmax(0,1fr) auto"><span>${WD[parseIso(p.d).getDay()].slice(0, 3)} ${ddmm(p.d)}</span><span><span class="kg">${kg2(p.kg)} kg</span> ${dd === null ? '' : `<span class="df ${dd < 0 ? 'neg' : ''}">${dd >= 0 ? '+' : '−'}${kg2(Math.abs(dd))}</span>`}</span></div>`;
   }).join('');
   renderNew(); drawChart();
 }
@@ -889,7 +888,7 @@ function drawChart() {
   ps.forEach((p, i) => {
     const cx = X(t(p.d)), cy = Y(p.kg), lp = i === ps.length - 1;
     g += `<circle cx="${cx}" cy="${cy}" r="${lp ? 6 : 4.5}" fill="${lp ? '#3E9A55' : ink}" style="stroke:var(--card)" stroke-width="2"/>`;
-    if (lp || W > 420) g += `<text x="${cx}" y="${cy - 11}" text-anchor="middle" font-size="12" font-weight="700" fill="${ink}">${kgs(p.kg)}</text>`;
+    if (lp || W > 420) g += `<text x="${cx}" y="${cy - 11}" text-anchor="middle" font-size="12" font-weight="700" fill="${ink}">${kg2(p.kg)}</text>`;
   });
   chart.innerHTML = g;
 }
@@ -900,7 +899,7 @@ const MEALS = [
   { h: 6, n: 'Pequeno-almoço', it: '3 ovos mexidos ou omelete · 2 fatias de pão · batido (300 ml de leite + 1 dose de whey)' },
   { h: 10, n: 'Lanche da manhã', it: '1 peça de fruta' },
   { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' },
-  { h: 17, n: 'Lanche da tarde', it: 'Wrap de atum + ovo mexido, iogurte proteico e fruta. Com muita fome: 2 wraps' },
+  { h: 17, n: 'Lanche da tarde', it: '2 wraps de atum + ovo mexido, iogurte proteico e fruta' },
   { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' }
 ];
 const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
@@ -948,7 +947,7 @@ function renderHoje() {
   let ban = '';
   if (isWeighDay(TODAY)) {
     const got = loggedOn(TODAY);
-    ban = got ? `<div class="banner"><b>Pesagem feita: ${kgs(got.kg)} kg ✓</b>${TODAY === TEST_END ? 'Não te esqueças das 4 fotos: frente, costas, lado direito e lado esquerdo.' : 'Boa! Próxima no sábado, ' + ddmm(nextWeigh()) + '.'}</div>`
+    ban = got ? `<div class="banner"><b>Pesagem feita: ${kg2(got.kg)} kg ✓</b>${TODAY === TEST_END ? 'Não te esqueças das 4 fotos: frente, costas, lado direito e lado esquerdo.' : 'Boa! Próxima no sábado, ' + ddmm(nextWeigh()) + '.'}</div>`
       : `<div class="banner"><b>${TODAY === TEST_END ? 'Último dia do teste' : 'Hoje é dia de te pesares'}</b>De manhã, em jejum, depois de ires à casa de banho.${TODAY === TEST_END ? ' ' + fotos : ''}<br><a class="btn" href="#peso" style="margin-top:10px;background:#6B4E00;color:#fff">Apontar o peso</a></div>`;
   }
   $('#hojeBanner').innerHTML = ban;
@@ -983,7 +982,7 @@ $('#bottles').addEventListener('click', ev => {
 });
 
 /* ---------- compras ---------- */
-function weekStart() { const d = parseIso(TODAY); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return iso(d); }
+function weekStart() { const d = parseIso(TODAY); d.setDate(d.getDate() - (d.getDay() + 1) % 7); return iso(d); }
 const WK = weekStart();
 const ITEMS = [...document.querySelectorAll('.it2')];
 const euro = v => v.toFixed(2).replace('.', ',') + ' €';
@@ -994,7 +993,7 @@ const NEED = {
       const parts = []; if (best.g) parts.push(pl(best.g, 'caixa de 24 (6,49 €)', 'caixas de 24 (6,49 € cada)')); if (best.s) parts.push(pl(best.s, 'caixa de 6 (1,79 €)', 'caixas de 6 (1,79 € cada)'));
       return [pl(k, 'ovo', 'ovos'), 'Ovos de Solo Classe M: ' + parts.join(' + '), best.p]; } },
   'pd-pao': { n: 1, u: ['pacote', 'pacotes'], f: k => [pl(k, 'pacote', 'pacotes'), 'Pão de Forma Branco com Côdea Pingo Doce 600 g', k * 1.09] },
-  'pd-wraps': { n: 8, u: ['wrap', 'wraps'], f: k => { const p = Math.ceil(k / 8); return [pl(p, 'pacote de 8', 'pacotes de 8'), 'Tortilhas Wrap Pingo Doce, 1,09 € o pacote', p * 1.09]; } },
+  'pd-wraps': { n: 14, u: ['wrap', 'wraps'], f: k => { const p = Math.ceil(k / 8); return [pl(p, 'pacote de 8', 'pacotes de 8'), 'Tortilhas Wrap Pingo Doce, 1,09 € o pacote', p * 1.09]; } },
   'pd-atum': { n: 7, u: ['lata', 'latas'], f: k => [pl(k, 'lata', 'latas'), 'Atum Posta ao Natural Pingo Doce, 0,94 € cada', k * 0.94] },
   'pd-macas': { n: 28, u: ['maçã', 'maçãs'], f: k => { const s = Math.floor(k / 9), l = k % 9, parts = [];
       if (s) parts.push(pl(s, 'saco de 1,5 kg', 'sacos de 1,5 kg')); if (l) parts.push(pl(l, 'solta', 'soltas'));
@@ -1020,6 +1019,7 @@ function renderCompras() {
     it.querySelector('.q').textContent = q; it.querySelector('.d').textContent = d; it.querySelector('.p').textContent = euro(p);
     need++; tot[it.dataset.s] += p; if (cb.checked) done++;
   });
+  $('#cFull').textContent = euro(ITEMS.reduce((a, it) => a + NEED[it.dataset.id].f(NEED[it.dataset.id].n)[2], 0));
   $('#tot-pd').textContent = euro(tot.pd); $('#tot-ct').textContent = euro(tot.ct); $('#cTot').textContent = euro(tot.pd + tot.ct);
   $('#cProg').textContent = need === 0 ? 'Tens tudo em casa esta semana!' : done === need ? 'Tudo no carrinho!' : done + ' de ' + need + ' no carrinho';
 }
@@ -1031,30 +1031,123 @@ ITEMS.forEach(it => {
   }));
 });
 
-/* ---------- enviar à Rafaela ---------- */
-function weekSummary() {
-  const st = parseIso(TODAY); st.setDate(st.getDate() - (st.getDay() + 6) % 7);
-  const days = [...Array(7)].map((_, k) => { const d = new Date(st); d.setDate(st.getDate() + k); return iso(d); });
-  const L = ['Semana do Vitor (' + ddmm(days[0]) + ' a ' + ddmm(days[6]) + ')'];
-  const ps = pesos();
-  if (ps.length) L.push('Peso: ' + ps.map(p => ddmm(p.d) + ' ' + kgs(p.kg) + ' kg').join(' · '));
-  L.push('Água: ' + days.filter(d => d <= TODAY).map(d => WD[parseIso(d).getDay()].slice(0, 3) + ' ' + ((Number(S.agua[d]) || 0) * 1.5).toString().replace('.', ',') + ' L').join(' · '));
-  const ks = Object.keys(S.treinos).filter(k => SESS_RE.test(k) && days.includes(k.slice(0, 10))).sort();
-  const tx = ks.map(daySummary).filter(Boolean);
-  L.push('', tx.length ? tx.join('\n\n') : 'Ainda sem treinos apontados esta semana.');
+/* ---------- enviar à Rafaela: imagem pronta (resumo do treino ou da semana) ---------- */
+const PHONE = '351967365006';
+const weekDays = () => [...Array(7)].map((_, k) => { const d = parseIso(MON); d.setDate(d.getDate() + k); return iso(d); });
+const weekKeys = () => { const days = weekDays(); return Object.keys(S.treinos).filter(k => SESS_RE.test(k) && days.includes(k.slice(0, 10))).sort(); };
+const setsTxt = x => sets(x).filter(a => a[0] || a[1]).map(a => (a[0] || '?') + ' kg × ' + (a[1] || '?'));
+/* texto (só se o telemóvel não conseguir partilhar a imagem) */
+function dayTextWA(k) {
+  const s = sessionOf(k), dk = k.slice(11), d = DAYS[dk];
+  const L = ['*Treino de ' + WD[parseIso(k.slice(0, 10)).getDay()] + ', ' + ddmm(k) + '*', '_' + d.t + '_'];
+  d.ex.forEach((e, i) => { const x = s && s.x[i]; L.push('', '*' + (i + 1) + '. ' + e[0] + '*', x && hasData(x) ? setsTxt(x).join('\n') || '—' : 'Não apontado'); if (x && String(x.nota || '').trim()) L.push('📝 ' + String(x.nota).trim()); });
   return L.join('\n');
 }
-const dayText = () => daySummary(sessKey(selDay)) || 'Ainda não apontei nada neste treino.';
-function updateSend() {
-  const a = $('#waDay'); if (a) a.href = 'https://wa.me/351967365006?text=' + encodeURIComponent(dayText());
-  const w = $('#waWeek'); if (w) w.href = 'https://wa.me/351967365006?text=' + encodeURIComponent(weekSummary());
+function weekTextWA() {
+  const days = weekDays(), L = ['*Semana do Vitor · ' + ddmm(days[0]) + ' a ' + ddmm(days[6]) + '*'];
+  const ps = pesos(); if (ps.length) L.push('', '*Peso*', ...ps.map(p => ddmm(p.d) + ': ' + kg2(p.kg) + ' kg'));
+  L.push('', '*Água*', ...days.filter(d => d <= TODAY).map(d => cap(WD[parseIso(d).getDay()]) + ': ' + ((Number(S.agua[d]) || 0) * 1.5).toString().replace('.', ',') + ' L'));
+  weekKeys().filter(k => daySummary(k)).forEach(k => L.push('', '────────', dayTextWA(k)));
+  return L.join('\n');
 }
-document.addEventListener('click', async ev => {
-  const b = ev.target.closest('[data-copy]'); if (!b) return;
-  const txt = b.dataset.copy === 'day' ? dayText() : weekSummary(), old = b.textContent;
-  try { await navigator.clipboard.writeText(txt); b.textContent = 'Copiado ✓'; setTimeout(() => { b.textContent = old; }, 2000); }
-  catch (e) { const t = b.closest('.card').querySelector('.copyBox'); t.hidden = false; t.value = txt; t.focus(); t.select(); b.textContent = 'Copia em baixo'; }
-});
+/* imagem */
+const FT = '"Barlow Condensed", system-ui, sans-serif', FB = 'system-ui, -apple-system, "Segoe UI", sans-serif';
+function wrapLines(c, txt, w) { const out = []; String(txt).split('\n').forEach(par => { let line = ''; par.split(' ').forEach(word => { const t2 = line ? line + ' ' + word : word; if (c.measureText(t2).width > w && line) { out.push(line); line = word; } else line = t2; }); out.push(line); }); return out; }
+function paint(c, kind, W) {
+  let y = 0; const P = 56, IW = W - P * 2, draw = !!c.canvas.dataset.draw;
+  const text = (s, x, yy, font, color, align) => { if (!draw) return; c.font = font; c.fillStyle = color; c.textAlign = align || 'left'; c.fillText(s, x, yy); };
+  const rect = (x, yy, w, h, r, color) => { if (!draw) return; c.fillStyle = color; c.beginPath(); c.roundRect ? c.roundRect(x, yy, w, h, r) : c.rect(x, yy, w, h); c.fill(); };
+  const para = (s, x, font, color, w, lh) => { c.font = font; const ls = wrapLines(c, s, w); ls.forEach(l => { text(l, x, y + lh * 0.78, font, color); y += lh; }); };
+  // cabeçalho
+  const days = weekDays(), k = sessKey(selDay), d = DAYS[selDay];
+  const title = kind === 'day' ? 'Treino de ' + WD[parseIso(k.slice(0, 10)).getDay()] + ', ' + ddmm(k) : 'Semana de ' + ddmm(days[0]) + ' a ' + ddmm(days[6]);
+  const sub = kind === 'day' ? d.t : 'Peso, água e treinos';
+  rect(0, 0, W, 250, 0, '#1F2A24');
+  text('PROJETO VITOR', P, 74, '700 30px ' + FB, '#7FD39A');
+  text(title, P, 160, '700 76px ' + FT, '#FFFFFF');
+  text(sub, P, 214, '400 34px ' + FB, '#C9D3CD');
+  y = 290;
+  const exBlock = (dk, kk, i, compact) => {
+    const e = DAYS[dk].ex[i], s = sessionOf(kk), x = s && s.x[i], r = rx(e[3]), col = DAYS[dk].c;
+    const top = y; y += 26;
+    const ref = kgs(refKg(dk, i, kk.slice(0, 10))) + ' kg' + (e[8] ? ' (cada halter)' : '');
+    if (draw) { c.fillStyle = col; c.beginPath(); c.arc(P + 34, y + 22, 22, 0, 7); c.fill(); }
+    text(String(i + 1), P + 34, y + 33, '700 28px ' + FB, '#FFFFFF', 'center');
+    para(e[0], P + 76, '700 34px ' + FB, '#14201A', IW - 110, 42);
+    para('Indicado: ' + r.n + ' × ' + r.lo + '–' + r.hi + ' · ' + ref, P + 76, '400 26px ' + FB, '#5B6660', IW - 110, 34);
+    y += 8;
+    const ss = x ? sets(x).filter(a => a[0] || a[1]) : [];
+    if (!ss.length) { para('Não apontado', P + 76, 'italic 400 28px ' + FB, '#A0352B', IW - 110, 38); }
+    else {
+      let cx = P + 76; const ch = 54; c.font = '700 28px ' + FB;
+      ss.forEach((a, j) => {
+        const lab = (j + 1) + 'ª  ' + (a[0] || '?') + ' kg × ' + (a[1] || '?'), w = c.measureText(lab).width + 36;
+        if (cx + w > W - P - 20) { cx = P + 76; y += ch + 10; }
+        rect(cx, y, w, ch, 14, '#EEF3EF'); text(lab, cx + 18, y + 37, '700 28px ' + FB, '#14201A'); cx += w + 10;
+      });
+      y += ch + 6;
+    }
+    if (x && String(x.nota || '').trim()) {
+      y += 8; c.font = 'italic 400 27px ' + FB; const ls = wrapLines(c, 'Nota: ' + String(x.nota).trim(), IW - 150);
+      rect(P + 76, y, IW - 96, ls.length * 36 + 26, 14, '#FFF4D6');
+      y += 13; ls.forEach(l => { text(l, P + 96, y + 28, 'italic 400 27px ' + FB, '#5A4300'); y += 36; }); y += 13;
+    }
+    y += 24;
+    if (draw) { c.strokeStyle = '#E3E8E4'; c.lineWidth = 2; c.beginPath(); c.moveTo(P, y); c.lineTo(W - P, y); c.stroke(); }
+    return top;
+  };
+  if (kind === 'day') {
+    d.ex.forEach((_, i) => exBlock(selDay, k, i));
+  } else {
+    const sec = s => { y += 20; text(s, P, y + 44, '700 44px ' + FT, '#14201A'); y += 66; };
+    const ps = pesos();
+    sec('Peso');
+    if (!ps.length) para('Ainda sem pesagens.', P, '400 30px ' + FB, '#5B6660', IW, 40);
+    ps.forEach((p, n) => { const prev = ps[n - 1], df = prev ? p.kg - prev.kg : null;
+      rect(P, y, IW, 60, 14, '#F2F5F3'); text(cap(WD[parseIso(p.d).getDay()]).slice(0, 3) + ' ' + ddmm(p.d), P + 22, y + 40, '400 30px ' + FB, '#14201A');
+      text(kg2(p.kg) + ' kg' + (df === null ? '' : '   (' + (df >= 0 ? '+' : '−') + kg2(Math.abs(df)) + ')'), W - P - 22, y + 40, '700 30px ' + FB, '#14201A', 'right'); y += 70; });
+    sec('Água (meta: 3 L por dia)');
+    const cw = (IW - 6 * 10) / 7;
+    days.forEach((dd, n) => { const past = dd <= TODAY, b = Number(S.agua[dd]) || 0, x0 = P + n * (cw + 10);
+      rect(x0, y, cw, 120, 14, !past ? '#F2F5F3' : b >= 2 ? '#DCEBFB' : b === 1 ? '#FFF1D6' : '#FBE3E0');
+      text(cap(WD[parseIso(dd).getDay()]).slice(0, 3), x0 + cw / 2, y + 42, '700 26px ' + FB, '#14201A', 'center');
+      text(past ? (b * 1.5).toString().replace('.', ',') + ' L' : '—', x0 + cw / 2, y + 90, '700 30px ' + FB, past && b < 2 ? '#A0352B' : '#14201A', 'center'); });
+    y += 140;
+    const ks = weekKeys().filter(kk => daySummary(kk));
+    sec('Treinos');
+    if (!ks.length) para('Ainda sem treinos apontados esta semana.', P, '400 30px ' + FB, '#5B6660', IW, 40);
+    ks.forEach(kk => { const dk = kk.slice(11);
+      rect(P, y, IW, 64, 14, DAYS[dk].c); text(cap(WD[parseIso(kk.slice(0, 10)).getDay()]) + ', ' + ddmm(kk) + ' · ' + DAYS[dk].t, P + 22, y + 43, '700 30px ' + FB, '#FFFFFF'); y += 76;
+      DAYS[dk].ex.forEach((_, i) => exBlock(dk, kk, i)); y += 10; });
+  }
+  y += 30; text('Enviado pela app Projeto Vitor', W / 2, y + 20, '400 24px ' + FB, '#8A948E', 'center'); y += 50;
+  return y;
+}
+function reportPng(kind) {
+  const W = 1080, cv = document.createElement('canvas'), c = cv.getContext('2d');
+  cv.width = W; cv.height = 10; const h = paint(c, kind, W);
+  cv.width = W; cv.height = Math.ceil(h); cv.dataset.draw = '1';
+  c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, W, cv.height); paint(c, kind, W);
+  const b64 = cv.toDataURL('image/png').split(',')[1], bin = atob(b64), u = new Uint8Array(bin.length);
+  for (let n = 0; n < bin.length; n++) u[n] = bin.charCodeAt(n);
+  return new Blob([u], { type: 'image/png' });
+}
+function sendReport(kind) {
+  const name = (kind === 'day' ? 'treino-' + ddmm(sessKey(selDay)) : 'semana-' + ddmm(MON)).replace('/', '-') + '.png';
+  let file = null;
+  try { file = new File([reportPng(kind)], name, { type: 'image/png' }); } catch (e) {}
+  if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+    navigator.share({ files: [file] }).catch(err => { if (err && err.name !== 'AbortError') openWA(kind); });
+    return;
+  }
+  openWA(kind);
+}
+function openWA(kind) {
+  const txt = kind === 'day' ? (daySummary(sessKey(selDay)) ? dayTextWA(sessKey(selDay)) : 'Ainda não apontei nada neste treino.') : weekTextWA();
+  window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(txt), '_blank');
+}
+function updateSend() {}
+document.addEventListener('click', ev => { const b = ev.target.closest('[data-send]'); if (b) sendReport(b.dataset.send); });
 
 /* ---------- arranque ---------- */
 function showGate(msg) {
