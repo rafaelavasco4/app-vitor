@@ -281,6 +281,10 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 .tot.big span:last-child{white-space:nowrap}
 .restb{display:flex;align-items:center;gap:8px;margin-top:8px;width:100%;min-height:44px;border-radius:12px;border:1px dashed var(--line);background:none;font-weight:600;font-size:15px;color:var(--ink);padding:0 12px;cursor:pointer;text-align:left}
 .restb svg{width:18px;height:18px;fill:none;stroke:var(--dc);stroke-width:2.2;stroke-linecap:round;flex:none}
+.party{background:#E3F2E7;color:#1E5A33;border-radius:14px;padding:12px 14px;font-weight:700;font-size:17px;display:flex;align-items:center;gap:10px}
+.party .em{font-size:34px;line-height:1;display:inline-block}
+.party.pop .em{animation:pop .9s ease-out}
+@keyframes pop{0%{transform:scale(.2) rotate(-30deg)}55%{transform:scale(1.6) rotate(12deg)}100%{transform:scale(1) rotate(0)}}
 @media (max-width:370px){.set{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr)}.rule{grid-template-columns:80px minmax(0,1fr)}.form{grid-template-columns:1fr 1fr}.form .btn{grid-column:1/-1}.plan .r{grid-template-columns:92px minmax(0,1fr) auto}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -457,19 +461,6 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
     <div class="flav"><span><i style="background:#F2C230"></i>Ananás</span><span><i style="background:#F08A24"></i>Laranja</span><span><i style="background:#E5484D"></i>Melancia</span><span><i style="background:#F4A27A"></i>Pêssego</span><span><i style="background:#C9D637"></i>Limão</span></div>
     <p class="muted small">Escolhe o sabor de que gostares.</p>
   </div>
-  <div class="card">
-    <h3>Como usar</h3>
-    <ol class="steps">
-      <li>Chegas ao trabalho</li>
-      <li>Enche 1 garrafa de 1,5 L até cima</li>
-      <li>Deita 1 saqueta</li>
-      <li>Fecha e abana bem</li>
-      <li>Bebe aos poucos durante o dia</li>
-      <li>Acabou? Enche outra garrafa com outra saqueta</li>
-    </ol>
-    <div class="two"><div><b>1 = 1</b>1 saqueta por cada garrafa de 1,5 L</div><div><b>2 × 1,5 L</b>= 3 litros por dia</div></div>
-    <div class="avoid" style="text-align:center"><b>Nada de sumo, nem às refeições.</b></div>
-  </div>
 </section>
 
 <!-- PESO -->
@@ -564,7 +555,7 @@ const WEEK = [
   { k: 'seg', s: 'Seg' }, { k: 'ter', s: 'Ter' },
   { k: 'qua', s: 'Qua', rest: 'Descanso. O músculo cresce enquanto descansa.' },
   { k: 'qui', s: 'Qui' }, { k: 'sex', s: 'Sex' },
-  { k: 'sab', s: 'Sáb', rest: 'Descanso.' }
+  { k: 'sab', s: 'Sáb', rest: 'Descanso. O músculo cresce enquanto descansa.' }
 ];
 const ORDER = [1, 2, 3, 4, 5, 6, 0];
 const rx = s => { const m = s.match(/(\d+)\s*×\s*(\d+)\D+(\d+)/); return { n: +m[1], lo: +m[2], hi: +m[3] }; };
@@ -963,7 +954,10 @@ function renderHoje() {
       <div class="small" style="margin-top:6px">Próximo treino: ${esc(DAYS[nk].n.toLowerCase())}, ${esc(DAYS[nk].t.toLowerCase())}.</div></div>`;
   }
   const b = Number(S.agua[TODAY]) || 0;
-  $('#aguaTxt').textContent = b >= 2 ? 'Feito! 3 litros hoje.' : (b === 1 ? '1,5 L de 3 L. Falta 1 garrafa.' : 'Toca numa garrafa quando a acabares.');
+  const at = $('#aguaTxt');
+  if (b >= 2) { at.className = 'party' + (justDone ? ' pop' : ''); at.innerHTML = '<span class="em">🎉</span><span>Parabéns! Bebeste os 3 litros de água hoje.</span>'; }
+  else { at.className = 'muted small'; at.textContent = b === 1 ? '1,5 L de 3 L. Falta 1 garrafa.' : 'Toca numa garrafa quando a acabares.'; }
+  justDone = false;
   $('#bottles').innerHTML = [1, 2].map(n => `<button type="button" class="bottle ${b >= n ? 'full' : ''}" data-b="${n}" aria-pressed="${b >= n}">
     <svg viewBox="0 0 28 56"><path d="M10 2h8v6l3 4v40a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V12l3-4z" fill="none" stroke="currentColor" stroke-width="2"/><path class="w" d="M11 4h6v5l3 4v38.5a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V13l3-4z"/></svg>
     <span><b>Garrafa ${n}</b><span class="muted small">1,5 L + 1 saqueta</span></span></button>`).join('');
@@ -978,10 +972,12 @@ function renderHoje() {
 $('#bottles').addEventListener('click', ev => {
   const bt = ev.target.closest('[data-b]'); if (!bt) return;
   const n = +bt.dataset.b, b = Number(S.agua[TODAY]) || 0;
-  put('agua', TODAY, b >= n ? n - 1 : n); renderHoje();
+  const nv = b >= n ? n - 1 : n; justDone = nv >= 2 && b < 2;
+  put('agua', TODAY, nv); renderHoje();
 });
 
 /* ---------- compras ---------- */
+var justDone = false;
 function weekStart() { const d = parseIso(TODAY); d.setDate(d.getDate() - (d.getDay() + 1) % 7); return iso(d); }
 const WK = weekStart();
 const ITEMS = [...document.querySelectorAll('.it2')];
