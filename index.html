@@ -289,6 +289,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
 .undo{display:block;margin:10px auto 0;border:0;background:none;color:var(--mute);font-size:14px;text-decoration:underline;cursor:pointer;min-height:36px}
 @media (max-width:370px){.set{grid-template-columns:44px minmax(0,1fr) minmax(0,1fr)}.rule{grid-template-columns:80px minmax(0,1fr)}.form{grid-template-columns:1fr 1fr}.form .btn{grid-column:1/-1}.plan .r{grid-template-columns:92px minmax(0,1fr) auto}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.qq{display:block;margin:12px 0}.qq textarea{min-height:64px;margin-top:6px}.qd{border-top:1px solid var(--line);padding:8px 0}.qd summary{font-weight:700;cursor:pointer;padding:4px 0}
 </style>
 </head>
 <body>
@@ -472,6 +473,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
     <div class="goal"><div class="bar"><i id="pBar"></i></div><div class="lab"><span>Início 68,05</span><span>Mínimo 70</span><span>Meta 71 kg</span></div></div>
   </div>
   <div class="card" id="pNew"></div>
+  <div class="card" id="qCard" hidden></div>
   <div class="card"><h3>Evolução</h3><div class="fig"><svg id="chart" role="img" aria-label="Gráfico do peso"></svg></div></div>
   <div class="card list" id="pList"></div>
   <h2>Enviar à Rafaela</h2>
@@ -624,6 +626,7 @@ async function pull(redraw) {
       for (const o of Q) if (o.fn === 'guardar' && o.p === p) { if (S[p][o.k] !== undefined) merged[o.k] = S[p][o.k]; else delete merged[o.k]; }
       S[p] = merged;
     }
+    if (isObj(d.questionarios)) { QS = d.questionarios; saveQS(); }
     if (isObj(d.pesagens)) S.peso = Object.fromEntries(Object.entries(d.pesagens).map(([k, v]) => [k, Number(v)]));
     saveLocal();
     setSync(Q.length ? 'busy' : 'ok');
@@ -831,6 +834,7 @@ function renderNew() {
   }
 }
 function renderPeso() {
+  try { renderQuest(); } catch (e) {}
   const ps = pesos(), last = ps[ps.length - 1], base = ps.find(p => p.d === '2026-11-14') || ps[0];
   $('#pNow').innerHTML = last ? kg2(last.kg) + '<small> kg</small>' : '—';
   const df = last && base ? last.kg - base.kg : 0, de = $('#pDelta');
@@ -1165,6 +1169,55 @@ $('#gateForm').addEventListener('submit', async ev => {
 });
 renderHeader(); renderHoje(); renderTreino(); renderCompras(); renderPeso(); route(); updateSend();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+/* ---------- questionário de sábado ---------- */
+var QS = (function () { try { return JSON.parse(localStorage.getItem('pv_quest') || '{}') || {}; } catch (e) { return {}; } })();
+var QDRAFT = {};
+var QQ = [
+  ['fome', 'Como andou a fome esta semana?', 'Ex.: ao jantar fiquei muito cheio…'],
+  ['comer', 'Conseguiste comer tudo? O que custou mais?', 'Ex.: o arroz do jantar era muito…'],
+  ['farto', 'Há alguma comida de que estejas farto?', 'Ex.: frango…'],
+  ['treinos', 'Como te sentiste nos treinos?', 'Ex.: com força, cansado, foi fácil…'],
+  ['sono', 'Como dormiste e como te sentiste no trabalho?', 'Ex.: dormi pouco na terça…'],
+  ['outro', 'Alguma dor, queixa ou coisa que queiras dizer?', 'Escreve aqui…']
+];
+var QDAYS = ['2026-11-28', '2026-12-05', '2026-12-12'];
+function saveQS() { try { localStorage.setItem('pv_quest', JSON.stringify(QS)); } catch (e) {} }
+function renderQuest() {
+  const el = $('#qCard'); if (!el) return;
+  const a = document.activeElement;
+  if (a && el.contains(a) && a.tagName === 'TEXTAREA') return;
+  let h = '';
+  if (QDAYS.includes(TODAY) && loggedOn(TODAY) && !QS[TODAY]) {
+    h += '<h3>Como correu a semana?</h3><p class="muted small">Responde com as tuas palavras. Demora 2 minutos.</p><form id="qForm">' +
+      QQ.map((q, i) => `<label class="qq"><b>${i + 1}. ${q[1]}</b><textarea name="${q[0]}" rows="2" maxlength="1000" placeholder="${esc(q[2])}">${esc(QDRAFT[q[0]] || '')}</textarea></label>`).join('') +
+      '<button class="btn full" type="submit">Enviar</button><p class="muted small" style="text-align:center;margin-top:6px">Depois de enviar, não dá para mudar. A Rafaela vê as tuas respostas.</p><p class="err" id="qErr"></p></form>';
+  }
+  const ds = Object.keys(QS).sort().reverse();
+  if (ds.length) {
+    h += '<h3' + (h ? ' style="margin-top:16px"' : '') + '>Como correu a semana</h3>' + ds.map((d, k) =>
+      `<details class="qd"${k === 0 ? ' open' : ''}><summary>Sábado ${ddmm(d)}</summary>` +
+      QQ.map(q => `<p class="small"><b>${q[1]}</b><br>${esc((QS[d] || {})[q[0]] || '—')}</p>`).join('') + '</details>').join('');
+  }
+  el.innerHTML = h; el.hidden = !h;
+}
+document.addEventListener('input', ev => {
+  const t = ev.target;
+  if (t && t.tagName === 'TEXTAREA' && t.closest && t.closest('#qForm')) QDRAFT[t.name] = t.value;
+});
+document.addEventListener('submit', ev => {
+  if (!ev.target || ev.target.id !== 'qForm') return;
+  ev.preventDefault();
+  const f = ev.target, r = {};
+  QQ.forEach(q => { r[q[0]] = (f.elements[q[0]].value || '').trim(); });
+  if (!Object.values(r).some(v => v)) { $('#qErr').textContent = 'Escreve pelo menos uma resposta.'; return; }
+  const b = f.querySelector('button'); b.disabled = true; b.textContent = 'A enviar…';
+  const fail = m => { b.disabled = false; b.textContent = 'Enviar'; $('#qErr').textContent = m; };
+  rpc('app_questionario', { p_pin: PIN, p_resp: r }).then(x => {
+    if (x && x.dia) { QS[x.dia] = x.respostas; QDRAFT = {}; saveQS(); if (document.activeElement) document.activeElement.blur(); renderQuest(); return; }
+    fail(x && x.erro === 'so_sabado' ? 'Só dá para enviar ao sábado.' : x && x.erro === 'sem_peso' ? 'Primeiro aponta o peso de hoje.' : 'Não deu para enviar. Tenta outra vez.');
+  }).catch(() => fail('Sem internet. Tenta outra vez quando tiveres rede.'));
+}, true);
+
 {
   pull(true).then(() => flush());
   if (pushOK() && Notification.permission === 'granted') subscribePush(false).catch(() => {});
