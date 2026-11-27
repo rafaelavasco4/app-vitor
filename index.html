@@ -340,17 +340,26 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
   <div class="meal" data-h="12" style="--mc:var(--ink)"><div class="h">12h</div><div class="card">
     <h3>Almoço</h3>
     <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>300 g</b></div>
+    <div class="it"><span>Feijão</span><b>1 concha</b></div>
     <div class="it"><span>Frango, peru ou peixe</span><b></b></div>
     <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
-    <div class="it"><span>Azeite</span><b>1 colher</b></div>
+    <div class="it"><span>Azeite <small class="muted">(por cima da comida, no prato)</small></span><b>1 colher</b></div>
     <div class="it"><span>Fruta</span><b>1 peça</b></div>
   </div></div>
 
-  <div class="meal" data-h="17" style="--mc:#2F7A4C"><div class="h">17h</div><div class="card">
-    <h3>Lanche da tarde <span class="tag">· escolhe 1</span></h3>
+  <div class="meal" data-h="14.5" style="--mc:#2F7A4C"><div class="h" style="font-size:23px">14h30</div><div class="card">
+    <h3>Lanche <span class="tag">· escolhe 1</span></h3>
     <div class="opts">
-      <div class="opt"><div class="t">Opção 1 · Wraps</div><div class="l"><b>2</b> wraps: atum + ovo mexido</div><div class="l"><b>1</b> iogurte proteico</div><div class="l"><b>1</b> peça de fruta</div></div>
-      <div class="opt"><div class="t">Opção 2 · Caixa</div><div class="l"><b>150 g</b> arroz ou batata</div><div class="l"><b>1</b> lata de atum ou <b>2</b> ovos mexidos</div><div class="l"><b>1</b> iogurte proteico</div></div>
+      <div class="opt"><div class="t">Opção 1 · Wrap</div><div class="l"><b>1</b> wrap: atum + ovo mexido</div></div>
+      <div class="opt"><div class="t">Opção 2 · Caixa</div><div class="l">Metade da caixa: <b>150 g</b> arroz ou batata + <b>1</b> lata de atum ou <b>2</b> ovos mexidos</div></div>
+    </div>
+  </div></div>
+
+  <div class="meal" data-h="16.5" style="--mc:#2F7A4C"><div class="h" style="font-size:23px">16h30</div><div class="card">
+    <h3>Lanche da tarde</h3>
+    <div class="opts">
+      <div class="opt"><div class="t">Opção 1 · Wrap</div><div class="l"><b>1</b> wrap: atum + ovo mexido</div><div class="l"><b>1</b> iogurte proteico</div><div class="l"><b>1</b> peça de fruta</div></div>
+      <div class="opt"><div class="t">Opção 2 · Caixa</div><div class="l">O resto da caixa</div><div class="l"><b>1</b> iogurte proteico</div></div>
     </div>
   </div></div>
 
@@ -359,7 +368,7 @@ textarea{width:100%;min-height:150px;border-radius:12px;border:1px solid var(--l
     <div class="it"><span>Arroz, massa ou batata (cozidos)</span><b>450 g</b></div>
     <div class="it"><span>Frango, peru ou peixe</span><b></b></div>
     <div class="it"><span>Salada ou legumes</span><b>à vontade</b></div>
-    <div class="it"><span>Azeite</span><b>1 colher</b></div>
+    <div class="it"><span>Azeite <small class="muted">(por cima da comida, no prato)</small></span><b>1 colher</b></div>
     <div class="it"><span>Fruta</span><b>1 peça</b></div>
   </div></div>
 
@@ -892,9 +901,10 @@ const ro = new ResizeObserver(drawChart); ro.observe(chart);
 const MEALS = [
   { h: 6, n: 'Pequeno-almoço', it: '3 ovos mexidos ou omelete · 2 fatias de pão · batido (300 ml de leite + 1 dose de whey)' },
   { h: 10, n: 'Lanche da manhã', it: '1 peça de fruta' },
-  { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' },
-  { h: 17, n: 'Lanche da tarde', it: '2 wraps de atum + ovo mexido, iogurte proteico e fruta' },
-  { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · frango, peru ou peixe · salada · 1 colher de azeite · 1 fruta' }
+  { h: 12, n: 'Almoço', it: '300 g de arroz, massa ou batata · 1 concha de feijão · frango, peru ou peixe · salada · 1 colher de azeite por cima · 1 fruta' },
+  { h: 14.5, l: '14h30', n: 'Lanche', it: '1 wrap de atum + ovo mexido' },
+  { h: 16.5, l: '16h30', n: 'Lanche da tarde', it: 'O outro wrap de atum + ovo mexido, iogurte proteico e fruta' },
+  { h: 21, n: 'Jantar', it: '450 g de arroz, massa ou batata · frango, peru ou peixe · salada · 1 colher de azeite por cima · 1 fruta' }
 ];
 const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -951,6 +961,8 @@ function renderHoje() {
       <div>${d.ex.length} exercícios · ${tot} séries</div><div class="meter"><i style="width:${Math.round(done / tot * 100)}%"></i></div>
       <div class="small" style="margin-top:4px">${done ? done + ' de ' + tot + ' séries apontadas' : 'Ainda não começaste'}</div>
       <a class="btn" href="#treino">${done ? 'Continuar treino' : 'Abrir treino'}</a></div>`;
+  } else if (wd === 0) {
+    $('#hojeTreino').innerHTML = `<div class="card today" style="--dc:#55605A"><h3 style="font-size:46px;line-height:1;letter-spacing:1px;margin:6px 0 10px">DESCANSO</h3><div>Se quiseres, faz uma caminhada de 30 a 40 minutos.</div></div>`;
   } else {
     const nk = nextTraining();
     $('#hojeTreino').innerHTML = `<div class="card today" style="--dc:#55605A"><div class="k">Hoje</div><h3>Dia de descanso</h3><div>${esc(w.rest)}</div>
@@ -968,7 +980,7 @@ function renderHoje() {
   let m = MEALS.find(x => x.h + 1 > hr), tomorrow = false;
   if (!m) { m = MEALS[0]; tomorrow = true; }
   $('#hojeMeal').innerHTML = `<div class="muted small">${tomorrow ? 'Amanhã' : (hr >= m.h ? 'Agora' : 'A seguir')}</div>
-    <div style="display:flex;gap:12px;align-items:baseline"><span class="h">${m.h}h</span><h3>${esc(m.n)}</h3></div>
+    <div style="display:flex;gap:12px;align-items:baseline"><span class="h">${m.l || m.h + 'h'}</span><h3>${esc(m.n)}</h3></div>
     <p style="margin:6px 0 10px">${esc(m.it)}</p><a class="btn ghost full" href="#comida">Ver o plano do dia</a>`;
   document.querySelectorAll('.meal').forEach(el => el.classList.toggle('now', !tomorrow && +el.dataset.h === m.h));
 }
